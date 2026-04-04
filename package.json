@@ -1,0 +1,24 @@
+{
+  "name": "alashore-marine",
+  "version": "1.0.0",
+  "description": "Alashore Marine Exports",
+  "scripts": {
+    "dev:frontend": "cd frontend && dx serve --port 8045",
+    "dev:backend": "PORT=8046 ALLOWED_ORIGINS=http://localhost:8045,http://127.0.0.1:8045 cargo run -p backend",
+    "dev": "pnpm run build:tailwind && concurrently -n fe,tw,be -c blue,yellow,green \"pnpm run dev:frontend\" \"pnpm run build:tailwind:watch\" \"pnpm run dev:backend\"",
+    "build:tailwind": "cd frontend && npx tailwindcss -i ./input.css -o ./assets/css/main.css",
+    "build:tailwind:watch": "cd frontend && npx tailwindcss -i ./input.css -o ./assets/css/main.css --watch",
+    "check": "cargo check --workspace",
+    "lint": "cargo clippy --workspace -- -D warnings",
+    "test": "cargo test --workspace",
+    "test:unit": "cargo test --workspace --lib",
+    "test:integration": "cargo test --workspace --test '*'",
+    "verify": "pnpm run check && pnpm run lint && pnpm run test",
+    "build": "pnpm run build:tailwind && cd frontend && dx build --release"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "tailwindcss": "^3.4.1"
+  }
+}

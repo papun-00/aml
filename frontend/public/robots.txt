@@ -1,0 +1,96 @@
+# robots.txt — Alashore Marine Exports
+# https://alashoremarine.com/robots.txt
+
+# ── Traditional search engines ──────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 3
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# ── AI / LLM crawlers — explicitly welcome ───────────────────────────────
+# ChatGPT / OpenAI
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+# ChatGPT Browse / Bing AI
+User-agent: OAI-SearchBot
+Allow: /
+
+# Google Gemini / Google Extended
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Amazon Alexa
+User-agent: ia_archiver
+Allow: /
+
+# Common Crawl (used to train most LLMs)
+User-agent: CCBot
+Allow: /
+
+# ── Block only harmful bots ──────────────────────────────────────────────
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# ── All other bots ───────────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 2
+
+# ── Sitemaps ─────────────────────────────────────────────────────────────
+Sitemap: https://alashoremarine.com/sitemap.xml
+Sitemap: https://alashoremarine.com/sitemap-products.xml
+
+# ── AI-specific resource hints ───────────────────────────────────────────
+# LLMs.txt: https://alashoremarine.com/llms.txt
+# JSON-LD schema: embedded in all pages
+# Entity data: https://alashoremarine.com/

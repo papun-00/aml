@@ -1,0 +1,17 @@
+[application]
+name    = "alashore-marine"
+default_platform = "web"
+out_dir = "dist"
+
+[web.app]
+title = "Alashore Marine Exports | Premium Seafood Exporter, India"
+
+[web.watcher]
+reload_html = true
+watch_path  = ["src", "assets"]
+
+[web.resource]
+style   = ["/assets/css/main.css"]
+
+[[web.proxy]]
+backend = "http://localhost:8046/api/"

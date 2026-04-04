@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Carbon Default: white background, gray-100 text */
+    @apply bg-white text-carbon-gray-100 font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Futuristic Grid Backgrounds */
+  .grid-bg {
+    position: relative;
+    background: #000; /* Dark space background */
+    overflow: hidden;
+  }
+  .grid-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, theme('colors.grid-line') 1px, transparent 1px),
+      linear-gradient(to bottom, theme('colors.grid-line') 1px, transparent 1px),
+      radial-gradient(circle, theme('colors.grid-line') 2px, transparent 2px);
+    background-size: 60px 100%, 100% 60px, 60px 60px;
+    background-position: 0 0, 0 0, 0 0;
+    animation: flow 20s linear infinite;
+    transform: perspective(800px) rotateX(15deg);
+    z-index: 0;
+  }
+  @keyframes flow {
+    to { background-position: 60px 0, 0 60px, 60px 60px; }
+  }
+  
+  .glass-card {
+    background: rgba(22, 22, 22, 0.65); /* Carbon dark transparent */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    @apply rounded-xl;
+  }
+
+  /* Layout & Nav (Carbon styling) */
+  .site-header { @apply sticky top-0 z-50 bg-white border-b border-gray-200; }
+  .nav-container { @apply flex items-center justify-between px-6 py-4 max-w-[1584px] mx-auto; }
+  .nav-logo { @apply flex items-center gap-2; }
+  .nav-links { @apply hidden md:flex items-center gap-6 text-sm font-normal text-carbon-gray-80; }
+  .nav-link { @apply hover:text-carbon-blue-60 transition-colors; }
+  /* Carbon Primary Button */
+  .nav-cta, .mobile-cta { @apply inline-flex items-center px-4 py-3 bg-carbon-blue-60 text-white text-sm font-normal hover:bg-carbon-blue-70 transition-all rounded-none; }
+  
+  .mobile-nav { @apply hidden; }
+  .mobile-nav.open { @apply block bg-white px-6 pb-6 shadow-md w-full absolute top-[75px] left-0 border-b border-gray-200; }
+  .mobile-nav ul { @apply flex flex-col gap-4 py-4; }
+  .mobile-nav a { @apply block text-sm font-normal text-carbon-gray-80; }
+  
+  /* Hero Section (Carbon Expressive Theme - Dark High Contrast) */
+  .hero { @apply relative bg-carbon-gray-100 text-white py-32 px-6 overflow-hidden; }
+  .hero-content { @apply relative z-10 max-w-[1584px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center; }
+  .hero-badge { @apply inline-flex items-center px-2 py-1 text-xs font-mono uppercase bg-carbon-gray-80 text-white mb-6 border border-carbon-gray-80; }
+  .hero-title { @apply text-5xl lg:text-7xl font-light tracking-tight leading-tight; }
+  .hero-title-main { @apply block font-medium; }
+  .hero-title-sub { @apply block text-3xl lg:text-4xl text-gray-300 mt-2 font-light; }
+  .hero-description { @apply text-lg text-gray-400 max-w-xl leading-relaxed mt-6; }
+  .hero-actions { @apply flex flex-col sm:flex-row gap-4 mt-10; }
+  .hero-certs { @apply flex flex-wrap gap-4 text-xs font-mono text-gray-400 mt-16 pt-8 border-t border-carbon-gray-80; }
+  .cert-item { @apply flex items-center gap-2; }
+  
+  /* Standard Carbon Buttons */
+  .btn { @apply inline-flex items-center justify-center px-4 py-3 text-sm font-normal transition-colors rounded-none outline-none focus:ring-2 focus:ring-offset-2 focus:ring-carbon-blue-60 cursor-pointer; }
+  .btn-primary { @apply bg-carbon-blue-60 text-white hover:bg-carbon-blue-70; }
+  .btn-ghost { @apply bg-transparent text-white border border-transparent hover:bg-carbon-gray-80; }
+  .btn-outline { @apply border border-carbon-blue-60 text-carbon-blue-60 hover:bg-carbon-blue-60 hover:text-white bg-transparent; }
+  .btn-lg { @apply px-6 py-4 text-base; }
+  
+  /* Stats Section (Carbon Layout) */
+  .stats-section { @apply py-16 bg-carbon-gray-10 border-b border-gray-200; }
+  .stats-grid { @apply max-w-[1584px] mx-auto px-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8; }
+  .stat-item { @apply flex flex-col border-l-2 border-carbon-blue-60 pl-4 py-1; }
+  .stat-label { @apply text-xs font-mono text-carbon-gray-80 uppercase mb-2; }
+  .stat-value { @apply text-3xl font-light text-carbon-gray-100; }
+  .stat-desc { @apply text-xs text-carbon-gray-80 mt-1; }
+  
+  /* Section Headers */
+  .section-header { @apply max-w-[1584px] mx-auto mb-12; }
+  .section-title { @apply text-3xl md:text-5xl font-light text-carbon-gray-100 tracking-tight; }
+  .section-subtitle { @apply text-lg text-carbon-gray-80 mt-4 leading-relaxed max-w-3xl; }
+  
+  /* Products (Carbon Cards) */
+  .products-section { @apply py-24 bg-white px-6 border-t border-gray-200; }
+  .products-grid { @apply max-w-[1584px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6; }
+  .product-card { @apply bg-carbon-gray-10 p-6 border border-gray-200 hover:shadow-lg transition-shadow relative group rounded-none; }
+  .product-card-body { @apply flex flex-col gap-3 mt-4; }
+  .product-card-name { @apply text-2xl font-normal text-carbon-gray-100; }
+  .product-card-desc { @apply text-carbon-gray-80 text-sm; }
+  .product-card-certs { @apply flex flex-wrap gap-2 mt-2; }
+  .product-card-certs span { @apply text-xs font-mono bg-white border border-gray-300 text-carbon-gray-80 px-2 py-1; }
+  .product-card-link { @apply mt-4 text-carbon-blue-60 font-medium group-hover:underline inline-flex items-center gap-2; }
+  .product-card-tag { @apply absolute top-6 right-6 bg-carbon-gray-100 text-white text-xs font-mono px-2 py-1; }
+  
+  /* Inner Pages (About, Contact, Products) */
+  .page-hero { @apply bg-carbon-gray-100 text-white py-24 px-6 border-b-8 border-carbon-blue-60; }
+  .page-hero-content { @apply max-w-[1584px] mx-auto flex flex-col gap-4; }
+  .breadcrumb { @apply text-gray-400 text-sm font-mono mb-6; }
+  .breadcrumb ol { @apply flex gap-2; }
+  .breadcrumb li::after { content: "/"; @apply ml-2 text-gray-600; }
+  .breadcrumb li:last-child::after { content: ""; }
+  .page-title { @apply text-4xl md:text-6xl font-light tracking-tight; }
+  .page-subtitle { @apply text-xl text-gray-300 max-w-3xl font-light; }
+  
+  .about-overview { @apply max-w-[1584px] mx-auto py-24 px-6 grid grid-cols-1 lg:grid-cols-2 gap-16; }
+  .prose-block { @apply prose prose-lg prose-gray text-carbon-gray-80; }
+  .prose-block h2 { @apply text-3xl font-light text-carbon-gray-100 mb-6; }
+  
+  /* Tables (Carbon DataTable styling) */
+  .facts-table-wrapper { @apply bg-white border border-gray-200 p-0; }
+  .facts-table-wrapper h3 { @apply text-xl font-normal text-carbon-gray-100 p-4 border-b border-gray-200 bg-carbon-gray-10; }
+  .facts-table { @apply w-full text-left text-sm text-carbon-gray-80 border-collapse; }
+  .facts-table caption { @apply sr-only; }
+  .facts-table th { @apply p-4 border-b border-gray-200 font-medium text-carbon-gray-100 w-1/3 bg-white; }
+  .facts-table td { @apply p-4 border-b border-gray-200 bg-white; }
+  .facts-table tr:hover td { @apply bg-carbon-gray-10; }
+  .facts-table tr:last-child th, .facts-table tr:last-child td { @apply border-0; }
+
+  /* Timelines (Carbon structured) */
+  .timeline-section { @apply py-24 bg-carbon-gray-10 px-6; }
+  .timeline { @apply max-w-[1584px] mx-auto border-l border-gray-300 ml-6 pl-8 space-y-16 relative; }
+  .timeline-year { @apply absolute -left-[18px] top-0 bg-carbon-blue-60 text-white font-mono px-2 py-0.5 text-xs; }
+  .timeline-item { @apply relative; }
+  .timeline-content h3 { @apply text-2xl font-normal text-carbon-gray-100 mb-2; }
+  .timeline-content p { @apply text-carbon-gray-80 text-base; }
+  
+  .facility-section { @apply py-24 px-6 bg-white; }
+  .facility-grid { @apply max-w-[1584px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200 mt-12; }
+  .facility-item { @apply bg-white p-6 transition-colors hover:bg-carbon-gray-10; }
+  .facility-item dt { @apply font-medium text-carbon-gray-100 mb-2 text-lg; }
+  .facility-item dd { @apply text-carbon-gray-80 text-sm; }
+  
+  /* Misc layout */
+  .why-section { @apply py-24 px-6 bg-white; }
+  .why-grid { @apply max-w-[1584px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12; }
+  .why-item { @apply flex flex-col gap-3 p-6 bg-carbon-gray-10 border border-gray-200; }
+  .why-title { @apply text-xl font-medium text-carbon-gray-100; }
+  .why-desc { @apply text-carbon-gray-80 text-sm; }
+  
+  .markets-section { @apply py-24 px-6 bg-carbon-gray-100 text-white; }
+  .markets-list { @apply max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 text-base font-light text-gray-300; }
+  .markets-list li { @apply py-4 border-b border-carbon-gray-80 flex items-center; }
+  
+  .faq-section { @apply py-24 px-6 bg-white; }
+  .faq-grid { @apply max-w-[1584px] mx-auto space-y-0 border-t border-gray-200 mt-12; }
+  .faq-item { @apply py-6 border-b border-gray-200; }
+  .faq-q { @apply text-xl font-normal text-carbon-gray-100 mb-2 hover:text-carbon-blue-60 cursor-pointer transition-colors; }
+  .faq-a { @apply text-carbon-gray-80 text-base max-w-4xl; }
+  
+  .cta-section, .page-cta { @apply py-32 px-6 bg-carbon-blue-60 text-white; }
+  .cta-inner { @apply max-w-[1584px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center; }
+  .cta-title, .page-cta h2 { @apply text-4xl md:text-5xl font-light; }
+  .cta-desc, .page-cta p { @apply text-xl text-blue-100 font-light mt-4; }
+  .cta-actions, .page-cta .cta-actions { @apply flex flex-col sm:flex-row gap-4 mt-8; }
+  .cta-actions .btn-primary { @apply bg-white text-carbon-blue-60 hover:bg-gray-100; }
+
+  /* Loading spinner */
+  .loading-container { @apply flex flex-col items-center justify-center py-16 gap-4; }
+  .loading-spinner {
+    @apply w-8 h-8 border-2 border-carbon-gray-80 border-t-carbon-blue-60 rounded-full;
+    animation: spin 0.8s linear infinite;
+  }
+  .loading-text { @apply text-sm font-mono text-carbon-gray-80 uppercase tracking-wider; }
+
+  /* Error display */
+  .error-container { @apply flex flex-col items-center justify-center py-8 gap-4 text-center; }
+  .error-message { @apply text-red-500 font-mono text-sm; }
+
+  /* Product card image */
+  .product-card-img { @apply w-full h-48 object-cover; }
+}

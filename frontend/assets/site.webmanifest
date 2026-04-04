@@ -1,0 +1,12 @@
+{
+  "name": "Alashore Marine Exports",
+  "short_name": "Alashore Marine",
+  "description": "Premium frozen seafood exporter from India. BAP 4-Star, BRC AA, CRISIL A3+.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#020d18",
+  "theme_color": "#009d9a",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
