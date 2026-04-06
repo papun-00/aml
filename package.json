@@ -5,8 +5,9 @@
   "scripts": {
     "dev:frontend": "cd frontend && dx serve --port 8045",
     "dev:backend": "PORT=8046 ALLOWED_ORIGINS=http://localhost:8045,http://127.0.0.1:8045 cargo run -p backend",
-    "dev": "pnpm run build:tailwind && (pnpm run dev:backend & pnpm run build:tailwind:watch & sleep 5 && pnpm run dev:frontend & wait)",
-    "build:tailwind": "cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css",
+    "kill-ports": "lsof -ti:8045 | xargs kill -9 2>/dev/null; lsof -ti:8046 | xargs kill -9 2>/dev/null; echo 'Ports 8045/8046 cleared'",
+    "dev": "pnpm run kill-ports && pnpm run build:tailwind && (pnpm run dev:backend & pnpm run build:tailwind:watch & sleep 5 && pnpm run dev:frontend & wait)",
+    "build:tailwind": "cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css && cp ./assets/css/main.css ./public/assets/css/main.css",
     "build:tailwind:watch": "cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css --watch",
     "check": "cargo check --workspace",
     "lint": "cargo clippy --workspace -- -D warnings",

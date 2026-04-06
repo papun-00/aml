@@ -91,7 +91,9 @@ pub fn CertificationsPage() -> Element {
 
         // Detailed cert cards
         section { class: "certs-detail", "aria-labelledby": "certs-detail-heading",
-            h2 { id: "certs-detail-heading", class: "section-title", "Certification Details" }
+            div { class: "section-header",
+                h2 { id: "certs-detail-heading", class: "section-title", "Certification Details" }
+            }
 
             div { class: "certs-grid",
                 CertCard {

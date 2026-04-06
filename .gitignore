@@ -11,6 +11,10 @@ target/
 frontend/dist/
 frontend/.dioxus/
 
+# ── Generated CSS (Tailwind build output) ─────────────────────
+frontend/public/assets/css/main.css
+frontend/assets/css/main.css
+
 # ── Node / pnpm ───────────────────────────────────────────────
 node_modules/
 .pnpm-store/
@@ -24,6 +28,7 @@ yarn-error.log*
 # ── Playwright / Testing Artifacts ────────────────────────────
 playwright-report/
 test-results/
+test-suit/
 blob-report/
 playwright/.cache/
 e2e/results/

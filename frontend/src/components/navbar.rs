@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 use dioxus::prelude::*;
 use crate::Route;
+use super::theme_toggle::ThemeToggle;
 
 #[component]
 pub fn Navbar() -> Element {
@@ -24,14 +25,10 @@ pub fn Navbar() -> Element {
                     class: "nav-logo",
                     "aria-label": "Alashore Marine Exports – Home",
                     itemprop: "url",
-                    img { 
+                    img {
                         src: "/assets/alashore-logo.png",
-                        class: "h-12 w-auto object-contain",
-                        alt: "Alashore Marine Exports Logo"
-                    }
-                    div { class: "logo-text ml-3 font-bold text-xl",
-                        span { class: "text-ocean-blue dark:text-marine-teal", "Alashore" }
-                        span { class: "text-gray-600 block text-xs", "Marine Exports" }
+                        alt: "Alashore Marine Export Pvt. Ltd. Logo",
+                        style: "height:2.25rem;width:auto;object-fit:contain;",
                     }
                 }
 
@@ -58,6 +55,9 @@ pub fn Navbar() -> Element {
                         Link { to: Route::ContactPage {}, class: "nav-link", itemprop: "url", "Contact" }
                     }
                 }
+
+                // Theme toggle
+                ThemeToggle {}
 
                 // CTA
                 Link {

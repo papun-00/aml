@@ -1,8 +1,10 @@
 #![allow(non_snake_case)]
 
 mod components;
+pub mod certifications;
 pub mod config;
 mod pages;
+pub mod products;
 mod seo;
 mod utils;
 

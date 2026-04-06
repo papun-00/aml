@@ -11,7 +11,7 @@ reload_html = true
 watch_path  = ["src", "assets"]
 
 [web.resource.dev]
-style   = ["/assets/css/main.css"]
+style   = []
 
 [[web.proxy]]
 backend = "http://localhost:8046/api/"

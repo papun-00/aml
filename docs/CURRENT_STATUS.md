@@ -6,8 +6,11 @@ The project is a full-stack Rust application using a Cargo workspace:
 - **Backend:** Axum 0.7 REST API with OWASP security hardening. Located in `/backend`.
 - **Shared:** Shared types (models, schemas) in `/shared` guarantee type uniformity across the network boundary.
 
+### Markdown-Driven Product Content
+Product data lives in markdown files at `frontend/content/products/` with TOML frontmatter. Each file contains structured metadata (name, HS code, certs, markets, etc.) and free-form markdown for the detail page (overview, specs table, quality assurance). Files are embedded at compile time via `include_str!` and parsed by `frontend/src/products/parser.rs` using `toml` + `pulldown-cmark` crates.
+
 ### Config-Driven Architecture
-All product catalog data, company stats, certifications, FAQs, navigation, and company info are defined in a single file: `frontend/src/config.rs`. This eliminates scattered hardcoded values and makes content updates a one-file change.
+Company stats, certifications, FAQs, navigation, and company info are defined in `frontend/src/config.rs`. Product catalog is derived from the markdown frontmatter at runtime via `config::all_products()`.
 
 ### Reusable Components
 Four reusable components power the UI:
@@ -34,13 +37,16 @@ The backend implements OWASP-aligned security measures:
 - **LLMs.txt:** `/llms.txt` route for AI web scrapers.
 
 ## 5. Testing
-All 43 tests pass (`cargo test --workspace`):
+All 92 tests pass (`cargo test --workspace`):
 
 | Category | Count | Location |
 |---|---|---|
 | Backend unit (validation) | 9 | `backend/src/middleware/validate.rs` |
-| Backend integration (API) | 10 | `backend/tests/api_tests.rs` |
-| Frontend config | 8 | `frontend/tests/config_tests.rs` |
+| Backend unit (email) | 3 | `backend/src/services/email.rs` |
+| Backend unit (rate limit) | 3 | `backend/src/middleware/rate_limit.rs` |
+| Backend integration (API) | 18 | `backend/tests/api_tests.rs` |
+| Frontend config | 12 | `frontend/tests/config_tests.rs` |
+| Product content & parser | 20 | `frontend/tests/product_content_tests.rs` + `parser.rs` |
 | Shared types | 5 | `frontend/tests/shared_types_tests.rs` |
 | SSR landing page | 2 | `frontend/tests/landing_page_tests.rs` |
 

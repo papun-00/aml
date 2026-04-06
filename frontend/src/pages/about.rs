@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, about_seo}};
+use crate::{Route, seo::{PageSeo, about_seo}, config::growth_milestones, components::growth_timeline::GrowthTimeline};
 
 #[component]
 pub fn AboutPage() -> Element {
@@ -136,76 +136,20 @@ pub fn AboutPage() -> Element {
             }
         }
 
-        // ── Timeline ──────────────────────────────────────────────────
-        section {
-            class: "timeline-section",
-            "aria-labelledby": "timeline-heading",
-            h2 { id: "timeline-heading", class: "section-title", "Our Journey" }
-            ol { class: "timeline", role: "list",
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2012", "2012" }
-                    div { class: "timeline-content",
-                        h3 { "Incorporated as Accenture Marine Exports" }
-                        p { "Founded December 2012 in Balasore, Odisha by Mr. Gyan Ranjan Dash.
-                             First processing unit established at Somnathpur Industrial Estate." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2014", "2014" }
-                    div { class: "timeline-content",
-                        h3 { "MPEDA Registration & First EU Exports" }
-                        p { "Secured MPEDA registration. Obtained EU Establishment Approval.
-                             First shipments to European buyers in Spain and Italy." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2016", "2016" }
-                    div { class: "timeline-content",
-                        h3 { "BAP Certification & US Market Entry" }
-                        p { "Achieved BAP 4-Star certification. Commenced exports to the United States.
-                             Expanded processing capacity to 80 MT/day." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2018", "2018" }
-                    div { class: "timeline-content",
-                        h3 { "BRC AA & ASC Certification" }
-                        p { "Achieved BRC Grade AA for global food safety. Obtained ASC certification
-                             for aquaculture sustainability. Opened in-house EIA-approved lab." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2019", "2019" }
-                    div { class: "timeline-content",
-                        h3 { "Rebranded to Alashore Marine Exports" }
-                        p { "Company rebranded from Accenture Marine Exports to Alashore Marine Exports
-                             Pvt. Ltd. ₹100 Crore Federal Bank credit facility secured." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2020", "2020" }
-                    div { class: "timeline-content",
-                        h3 { "Peak Revenue — ₹436 Crore" }
-                        p { "Record turnover of ₹436 Crore. Workforce exceeded 800. Processing
-                             capacity scaled to 150 MT/day. CRISIL A3+ rating awarded." }
-                    }
-                }
-                li { class: "timeline-item",
-                    time { class: "timeline-year", datetime: "2024", "2024" }
-                    div { class: "timeline-content",
-                        h3 { "Continued Growth — 30+ Export Markets" }
-                        p { "Exporting to 30+ countries. Ongoing vertical integration investments.
-                             New website and digital infrastructure launched." }
-                    }
-                }
-            }
+        // ── Growth Journey — scroll-linked horizontal timeline ────────
+        GrowthTimeline {
+            milestones: growth_milestones(),
+            title: "Our Growth Journey".to_string(),
+            subtitle: "From a single processing unit in Balasore to 30+ global markets — a decade of relentless growth.".to_string(),
         }
 
         // ── Facility specs ─────────────────────────────────────────────
         section {
             class: "facility-section",
             "aria-labelledby": "facility-heading",
-            h2 { id: "facility-heading", class: "section-title", "Processing Facility" }
+            div { class: "section-header",
+                h2 { id: "facility-heading", class: "section-title", "Processing Facility" }
+            }
             dl { class: "facility-grid",
                 div { class: "facility-item",
                     dt { "Processing Capacity" }

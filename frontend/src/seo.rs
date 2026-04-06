@@ -124,21 +124,11 @@ pub fn PageSeo(props: SeoProps) -> Element {
         document::Meta { name: "entity:location", content: "Balasore, Odisha, India" }
         document::Meta { name: "entity:industry", content: "Seafood Export, Aquaculture" }
 
-        // ── JSON-LD schema (page-specific) ───────────────────────────
-        if let Some(schema) = &props.schema_json {
-            document::Script {
-                r#type: "application/ld+json",
-                dangerous_inner_html: "{schema}"
-            }
-        }
-
-        // ── Breadcrumb JSON-LD ───────────────────────────────────────
-        if let Some(bc) = breadcrumb_json {
-            document::Script {
-                r#type: "application/ld+json",
-                dangerous_inner_html: "{bc}"
-            }
-        }
+        // JSON-LD is provided in index.html for crawlers/AI engines.
+        // Dioxus 0.7 document::Script requires a single text child,
+        // so per-page JSON-LD is omitted here to avoid runtime errors.
+        // The static index.html covers Organization, FAQPage, ItemList,
+        // and BreadcrumbList schemas comprehensively.
     }
 }
 

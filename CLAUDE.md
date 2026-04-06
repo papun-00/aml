@@ -22,6 +22,7 @@ When triggered with **"Continue building Alashore Marine. Follow CLAUDE.md auton
 - All new components must be reusable with Props.
 - All new endpoints must have integration tests.
 - OWASP security on all user inputs.
+- **Code coverage must be >95% for both backend and frontend.** Measure and maintain this bar on every change.
 - Update this file's test count and backlog after each task.
 
 ---
@@ -40,7 +41,7 @@ Pick the **first unblocked** task. Mark `[x]` when done.
 - [x] **Frontend API integration** — `utils/api.rs` client module with `submit_inquiry()` and `subscribe_newsletter()`. Inquiry form wired to real backend with async submit, error display, and 429 handling.
 - [x] **Product images** — `image_url` field added to ProductConfig. ProductCard renders `<img>` with lazy loading. Paths point to `/assets/images/*.webp`.
 - [x] **Loading states & error handling** — Reusable `Loading` and `ErrorDisplay` components. CSS spinner animation. Inquiry form shows real API errors.
-- [ ] **Dark/light theme toggle** — Add theme switcher respecting Carbon Design tokens. Persist in localStorage.
+- [x] **Dark/light theme toggle** — Carbon Design SVG icons (Light/Asleep). Persists in localStorage. Soft blue palette (#B8D4E8).
 - [ ] **Accessibility audit** — Ensure WCAG 2.1 AA compliance. Keyboard navigation, ARIA labels, focus management, skip links, screen reader testing.
 
 ### Phase 3 — Production Readiness
@@ -73,9 +74,19 @@ Alashore Marine Exports is a full-stack Rust web application for an Indian froze
 ## Workspace Structure
 
 ```
+frontend/content/
+  products/               # Markdown files with TOML frontmatter (one per product)
+  certifications.toml     # Config-driven cert badges (layout + entries)
+
 frontend/src/
   main.rs           # Route enum, App component
-  config.rs         # SINGLE SOURCE OF TRUTH for all data
+  config.rs         # Config-driven data (derives products from markdown, certs from TOML)
+  certifications/
+    mod.rs           # include_str! TOML loading + public API
+    parser.rs        # TOML parser for certifications config
+  products/
+    mod.rs           # include_str! product loading + public API
+    parser.rs        # TOML frontmatter parser + markdown-to-HTML renderer
   components/
     mod.rs           # Component re-exports
     layout.rs        # Page layout wrapper
@@ -109,7 +120,7 @@ shared/src/lib.rs    # InquiryPayload, NewsletterPayload, ApiResponse, etc.
 ```bash
 pnpm install              # Install Node deps (Tailwind, concurrently)
 pnpm dev                  # Run frontend + backend + Tailwind watcher
-cargo test --workspace    # Run all 63 tests
+cargo test --workspace    # Run all 106 tests
 cargo clippy --workspace  # Lint
 cargo check --workspace   # Type check
 ```
@@ -119,7 +130,9 @@ cargo check --workspace   # Type check
 `frontend/src/config.rs` contains:
 - `all_products()` -> `Vec<ProductConfig>` (6 products: shrimp, cephalopods, fish, dried)
 - `company_stats()` -> `Vec<StatItem>` (6 stats)
-- `certifications()` -> `Vec<CertConfig>` (5 certs)
+- `certifications()` -> `Vec<CertEntry>` (5 certs, from `content/certifications.toml`)
+- `cert_config()` -> `CertificationsConfig` (layout + certs from TOML)
+- `cert_layout()` -> `CertLayout` (direction, rows, stamp_size, gap)
 - `nav_items()` -> `Vec<NavItem>` (7 nav links)
 - `faqs()` -> `Vec<FaqItem>` (4 FAQs)
 - `inquiry_products()` -> inquiry dropdown options
@@ -153,7 +166,9 @@ Implemented in `backend/src/middleware/`:
 | Backend unit (email) | 3 | `backend/src/services/email.rs` |
 | Backend unit (rate limit) | 3 | `backend/src/middleware/rate_limit.rs` |
 | Backend integration (API) | 18 | `backend/tests/api_tests.rs` |
-| Frontend config | 8 | `frontend/tests/config_tests.rs` |
+| Frontend config | 30 | `frontend/tests/config_tests.rs` |
+| Cert TOML parser | 7 | `frontend/src/certifications/parser.rs` |
+| Product content & parser | 20 | `frontend/tests/product_content_tests.rs` + `frontend/src/products/parser.rs` |
 | Shared types | 5 | `frontend/tests/shared_types_tests.rs` |
 | SSR landing page | 2 | `frontend/tests/landing_page_tests.rs` |
 
@@ -166,6 +181,47 @@ Implemented in `backend/src/middleware/`:
 - **Route enum naming**: All variants end with `Page` and use struct syntax: `HomePage {}`, `ProductsPage {}`, `AboutPage {}`.
 - **Tailwind classes**: Applied via `class:` attribute in RSX.
 - **Error handling**: Use `Result` types. Backend handlers return `ApiResponse<T>` from shared crate.
+
+## Visual Design System (MANDATORY — apply to every UI change)
+
+### Color Scheme
+- **Page backgrounds**: Light purple gradient (`#f8fafc → #ede9fe → #e0e7ff → #f0f9ff`). Never use plain black backgrounds for page sections.
+- **Footer**: Always carbon black (`#161616` / `var(--color-carbon-gray-100)`), regardless of light/dark mode.
+- **Hero section**: Deep ocean gradient (`#0a1628 → #122240 → #1a3355 → #2a6b8a`).
+- **Dark mode**: Only activates when user explicitly toggles. When dark: page sections use `#0f172a → #1e1b4b` gradients. Footer stays carbon black.
+- **Accent colors**: IBM Carbon Blue `#0f62fe`, Purple `#6929c4`, Teal `#009d9a`. Rotate per-element for visual variety.
+
+### Typography & Uniformity
+- **All section headings** (`h2`) MUST use the CSS class `section-title` for consistent font size (3xl mobile / 3rem desktop), weight (light), and color.
+- **All section subtitles** MUST use the CSS class `section-subtitle` for consistent sizing.
+- **MANDATORY: Every `section-title` MUST be wrapped in a `div { class: "section-header" }`** container. This ensures uniform `max-width: 1584px`, `margin: 0 auto 3rem`, and consistent left-alignment across all pages. Never place a `section-title` directly inside a section without this wrapper. This is a hard rule — violating it causes misaligned headings.
+- **Font sizes must be uniform** across all pages. Do NOT use arbitrary inline font sizes for headings. Use the established CSS classes.
+- **Font families**: `IBM Plex Sans` for body, `IBM Plex Mono` for data/metrics/badges.
+- **Section header blocks** use class `section-header` for consistent max-width and spacing.
+
+### Layout Rules
+- **Section headers are left-aligned** inside `section-header` (1584px max-width, auto margins).
+- **Text must be visible**: Ensure sufficient contrast in both light and dark modes. Light text on dark backgrounds, dark text on light backgrounds.
+- **Spacing**: Use Carbon 16px grid. Section padding: `--spacing * 20` to `--spacing * 24` vertical.
+
+### Component Design
+- **Cards**: Use soft color gradients per card for visual interest, NOT plain white/gray.
+- **Interactive components**: Must have hover/active/focus states with smooth transitions (0.3s cubic-bezier).
+- **Animations**: Use CSS `@keyframes` or `IntersectionObserver`. Never use JS `setInterval` for visual animations.
+- **Inline styles for custom components**: When CSS classes don't apply (e.g., positioning), use inline `style:` in RSX. But use CSS classes for anything shared across components.
+
+### SEO & Accessibility
+- Every page must have `PageSeo` component with unique title, description, and Open Graph tags.
+- All sections must have `aria-labelledby` pointing to their heading `id`.
+- Use `schema.org` structured data (itemscope, itemtype, itemprop) on all content sections.
+- Images must have `alt` text. Decorative elements must have `aria-hidden: "true"`.
+- Keyboard navigation must work on interactive components.
+
+### Testing
+- **TDD mandatory**: Write failing tests FIRST, then implement.
+- **Unit tests for all config data**: Every new config function needs tests for count, field validity, uniqueness.
+- **SSR landing page tests**: Mock components and verify rendered HTML contains expected classes and content.
+- **Code coverage >95%** for backend and frontend.
 
 ## How To: Add a New Product
 
@@ -193,6 +249,8 @@ Implemented in `backend/src/middleware/`:
 
 ## Common Pitfalls
 
+- **CSS source of truth is `frontend/input.css`**, NOT `frontend/assets/css/main.css`. The `main.css` file is **generated** by Tailwind and will be overwritten. Always edit `input.css` and run `pnpm build:tailwind` to regenerate.
+- **External SVGs with background rects**: Many SVGs include `<rect width="100%" fill="#FFF"/>` which will cover parent content. Always check SVG files for background rects before using them as overlays. Prefer inline SVGs in RSX for separators/decorations.
 - **`id` in RSX for-loops**: Dioxus reserves `key` for list reconciliation. Use `key: "{item.id}"` on the outermost element in `for` loops. Do NOT use `id` as a variable name that shadows Dioxus internals.
 - **Route variant naming**: Dioxus 0.6 Router derive macro requires each route variant to have a matching component function. `HomePage {}` needs a `fn HomePage() -> Element` function.
 - **lib.rs for tests**: Backend integration tests cannot access `main.rs` modules directly. `backend/src/lib.rs` exists to re-export `handlers`, `middleware`, etc.

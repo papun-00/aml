@@ -1,0 +1,55 @@
+# Certification Badges Configuration
+# -----------------------------------
+# Add new certifications by appending a [[certs]] entry.
+# The Rust frontend reads this at compile time — rebuild to reflect changes.
+
+[layout]
+direction   = "horizontal"   # "horizontal" | "vertical"
+rows        = 1               # 1 = single line, 2 = double line, etc.
+stamp_size  = 40              # px — uniform width & height for every badge
+gap         = 12              # px — spacing between badges
+
+[[certs]]
+id          = "bap"
+name        = "BAP 4-Star"
+badge_type  = "inline"        # "inline" (SVG rendered in code) | "image" (external file)
+brand_color = "#1B3A5C"
+label_short = "BAP"
+label_line2 = "4-STAR"
+icon_text   = "★★★★"
+
+[[certs]]
+id          = "brc"
+name        = "BRC AA"
+badge_type  = "inline"
+brand_color = "#7AB929"
+label_short = "BRCGS"
+label_line2 = "AA"
+icon_text   = "✓"
+
+[[certs]]
+id          = "asc"
+name        = "ASC"
+badge_type  = "inline"
+brand_color = "#00A5A0"
+label_short = "ASC"
+label_line2 = ""
+icon_text   = "✓"
+
+[[certs]]
+id          = "haccp"
+name        = "HACCP"
+badge_type  = "inline"
+brand_color = "#0052A5"
+label_short = "HACCP"
+label_line2 = ""
+icon_text   = "✓"
+
+[[certs]]
+id          = "eu"
+name        = "EU Approved"
+badge_type  = "inline"
+brand_color = "#003399"
+label_short = "EU"
+label_line2 = "APPROVED"
+icon_text   = "✓"

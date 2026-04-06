@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a0d2e"/>
+    </linearGradient>
+    <linearGradient id="tiger1" x1="200" y1="180" x2="600" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2d2d2d"/>
+      <stop offset="30%" stop-color="#1a1a1a"/>
+      <stop offset="60%" stop-color="#333"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="tiger-stripe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e8a040"/>
+      <stop offset="100%" stop-color="#d48020"/>
+    </linearGradient>
+    <radialGradient id="glow2" cx="400" cy="300" r="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(180,120,15,0.12)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="18" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg2)"/>
+  <circle cx="400" cy="300" r="280" fill="url(#glow2)"/>
+  <g filter="url(#shadow2)">
+    <!-- Main body -->
+    <path d="M230,240 C260,210 340,180 420,200 C500,220 540,280 555,340 C570,400 550,440 510,455 C470,470 420,460 370,435 C320,410 280,370 260,320 C240,270 235,250 230,240Z" fill="url(#tiger1)" stroke="#444" stroke-width="1"/>
+    <!-- Tiger stripes (orange/gold bands) -->
+    <g opacity="0.85">
+      <path d="M300,215 C310,240 320,280 315,330" stroke="#d48020" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M350,200 C358,240 365,290 360,350" stroke="#e8a040" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M400,205 C405,250 410,300 408,365" stroke="#d48020" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M445,225 C445,270 448,320 445,385" stroke="#e8a040" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M485,255 C480,295 478,340 472,400" stroke="#d48020" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.7"/>
+    </g>
+    <!-- Belly highlight -->
+    <path d="M270,260 C300,245 370,230 420,240 C470,250 510,285 530,330" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="20" stroke-linecap="round"/>
+    <!-- Tail fan -->
+    <path d="M225,245 C200,210 170,190 155,200 C148,208 155,225 170,235 C185,245 210,242 225,245Z" fill="#2d2d2d" stroke="#444" stroke-width="1"/>
+    <path d="M222,238 C195,200 165,175 150,182 C142,190 150,210 165,222 C180,234 205,235 222,238Z" fill="#333" stroke="#444" stroke-width="1"/>
+    <path d="M228,252 C205,232 180,225 168,235 C162,242 170,258 185,265 C200,272 218,262 228,252Z" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+    <!-- Tail stripes -->
+    <path d="M180,210 L195,225" stroke="#d48020" stroke-width="3" opacity="0.6"/>
+    <path d="M170,220 L185,235" stroke="#e8a040" stroke-width="3" opacity="0.6"/>
+    <!-- Head -->
+    <path d="M540,330 C570,315 595,295 610,270 C625,245 630,225 618,212 C606,200 588,205 572,218 C556,232 545,262 542,295 C540,310 540,322 540,330Z" fill="#2d2d2d" stroke="#444" stroke-width="1"/>
+    <!-- Eye -->
+    <circle cx="600" cy="240" r="11" fill="#0d0d0d"/>
+    <circle cx="603" cy="237" r="4" fill="#e8a040" opacity="0.9"/>
+    <circle cx="604" cy="236" r="2" fill="#fff" opacity="0.7"/>
+    <!-- Rostrum -->
+    <path d="M615,222 C635,205 660,185 690,170" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M618,225 C640,215 665,205 695,198" stroke="#2d2d2d" stroke-width="2" fill="none"/>
+    <!-- Antennae -->
+    <path d="M610,235 C645,225 680,235 720,215" stroke="#444" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M605,242 C635,260 670,270 710,260" stroke="#444" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Legs -->
+    <g stroke="#333" stroke-width="2" fill="none" stroke-linecap="round">
+      <path d="M460,415 C465,435 462,455 455,470"/>
+      <path d="M430,435 C435,450 432,465 426,478"/>
+      <path d="M400,442 C405,458 402,470 398,482"/>
+      <path d="M510,385 C520,405 518,425 512,445"/>
+      <path d="M535,352 C548,372 548,395 542,415"/>
+    </g>
+  </g>
+  <g opacity="0.1">
+    <circle cx="130" cy="380" r="3" fill="#e8a040"/>
+    <circle cx="680" cy="130" r="2" fill="#e8a040"/>
+    <circle cx="720" cy="450" r="3" fill="#e8a040"/>
+  </g>
+  <text x="400" y="560" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="18" font-weight="500" fill="rgba(255,255,255,0.7)">Black Tiger Prawn · Penaeus monodon</text>
+</svg>

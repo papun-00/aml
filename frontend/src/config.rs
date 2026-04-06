@@ -1,4 +1,9 @@
 //! Single source of truth for all config-driven data in the frontend.
+//!
+//! Product data is derived from markdown files in `frontend/content/products/`.
+//! All other data (stats, certs, nav, FAQs, company info) remains here.
+
+use crate::products;
 
 // ---------------------------------------------------------------------------
 // Product Catalog
@@ -21,113 +26,55 @@ impl ProductCategory {
             ProductCategory::Dried => "Dried",
         }
     }
+
+    pub fn from_label(s: &str) -> Self {
+        match s {
+            "Shrimp" => ProductCategory::Shrimp,
+            "Cephalopods" => ProductCategory::Cephalopods,
+            "Fish" => ProductCategory::Fish,
+            "Dried" => ProductCategory::Dried,
+            _ => ProductCategory::Fish,
+        }
+    }
 }
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct ProductConfig {
-    pub id: &'static str,
-    pub name: &'static str,
-    pub scientific_name: &'static str,
-    /// Whether the scientific name should be rendered in italics.
-    pub sci_italic: bool,
+    pub id: String,
+    pub name: String,
+    pub scientific_name: String,
     pub category: ProductCategory,
     pub featured: bool,
-    /// Optional marketing tag (e.g. "Popular").
-    pub tag: Option<&'static str>,
-    pub hs_code: &'static str,
-    pub certs: &'static [&'static str],
-    pub short_desc: &'static str,
-    pub css_class: &'static str,
-    pub image_url: &'static str,
+    pub tag: Option<String>,
+    pub hs_code: String,
+    pub certs: Vec<String>,
+    pub markets: Vec<String>,
+    pub min_order: String,
+    pub short_desc: String,
+    pub css_class: String,
+    pub image_url: String,
 }
 
+/// Derive all products from embedded markdown frontmatter.
 pub fn all_products() -> Vec<ProductConfig> {
-    vec![
-        ProductConfig {
-            id: "vannamei-shrimp",
-            name: "Vannamei Shrimp",
-            scientific_name: "Litopenaeus vannamei",
-            sci_italic: true,
-            category: ProductCategory::Shrimp,
-            featured: true,
-            tag: None,
-            hs_code: "0306.17",
-            certs: &["BAP 4\u{2605}", "ASC", "BRC AA"],
-            short_desc: "BAP 4-Star certified. Sizes U/10 to 50/60. HOSO, HLSO, PTO, PD, Butterfly, IQF formats.",
-            css_class: "vannamei",
-            image_url: "/assets/images/vannamei-shrimp.webp",
-        },
-        ProductConfig {
-            id: "black-tiger-shrimp",
-            name: "Black Tiger Prawn",
-            scientific_name: "Penaeus monodon",
-            sci_italic: true,
-            category: ProductCategory::Shrimp,
-            featured: false,
-            tag: None,
-            hs_code: "0306.16",
-            certs: &["MPEDA", "HACCP", "EU"],
-            short_desc: "Wild-caught & farm-raised. Sizes U/8 to 16/20. Sashimi grade available.",
-            css_class: "black-tiger",
-            image_url: "/assets/images/black-tiger-shrimp.webp",
-        },
-        ProductConfig {
-            id: "squid",
-            name: "Indian Squid",
-            scientific_name: "Doryteuthis sibogae",
-            sci_italic: true,
-            category: ProductCategory::Cephalopods,
-            featured: true,
-            tag: Some("Popular"),
-            hs_code: "0307.43",
-            certs: &["MPEDA", "HACCP", "EU"],
-            short_desc: "Bay of Bengal wild catch. Whole, tubes & tentacles, rings (6mm/10mm), steaks.",
-            css_class: "squid",
-            image_url: "/assets/images/squid.webp",
-        },
-        ProductConfig {
-            id: "cuttlefish",
-            name: "Cuttlefish",
-            scientific_name: "Sepia pharaonis",
-            sci_italic: true,
-            category: ProductCategory::Cephalopods,
-            featured: false,
-            tag: None,
-            hs_code: "0307.99",
-            certs: &["MPEDA", "HACCP", "EU"],
-            short_desc: "Pharaoh cuttlefish from Bay of Bengal. Whole cleaned or tubes & tentacles.",
-            css_class: "cuttlefish",
-            image_url: "/assets/images/cuttlefish.webp",
-        },
-        ProductConfig {
-            id: "pink-perch",
-            name: "Pink Perch",
-            scientific_name: "Nemipterus japonicus",
-            sci_italic: true,
-            category: ProductCategory::Fish,
-            featured: false,
-            tag: None,
-            hs_code: "0302.89",
-            certs: &["MPEDA", "HACCP", "EU"],
-            short_desc: "Threadfin bream. Whole round, HG, fillet skin-on or skinless.",
-            css_class: "pink-perch",
-            image_url: "/assets/images/pink-perch.webp",
-        },
-        ProductConfig {
-            id: "dried-shrimp",
-            name: "Dried Shrimp",
-            scientific_name: "Sun-Dried",
-            sci_italic: false,
-            category: ProductCategory::Dried,
-            featured: false,
-            tag: None,
-            hs_code: "0306.99",
-            certs: &["FSSAI", "MPEDA"],
-            short_desc: "No preservatives. Whole, crushed or powder. 12-month shelf life at +4\u{00b0}C.",
-            css_class: "dried-shrimp",
-            image_url: "/assets/images/dried-shrimp.webp",
-        },
-    ]
+    products::all_parsed_products()
+        .into_iter()
+        .map(|(fm, _body)| ProductConfig {
+            id: fm.id,
+            name: fm.name,
+            scientific_name: fm.scientific_name,
+            category: ProductCategory::from_label(&fm.category),
+            featured: fm.featured,
+            tag: if fm.tag.is_empty() { None } else { Some(fm.tag) },
+            hs_code: fm.hs_code,
+            certs: fm.certs,
+            markets: fm.markets,
+            min_order: fm.min_order,
+            short_desc: fm.short_desc,
+            css_class: fm.css_class,
+            image_url: fm.image_url,
+        })
+        .collect()
 }
 
 // ---------------------------------------------------------------------------
@@ -146,30 +93,31 @@ pub fn company_stats() -> Vec<StatItem> {
         StatItem { label: "Founded",           value: "2012",      desc: "December 2012, Balasore" },
         StatItem { label: "Export Markets",     value: "30+",       desc: "Countries worldwide" },
         StatItem { label: "Workforce",          value: "800+",      desc: "Direct employees" },
-        StatItem { label: "Peak Revenue",       value: "₹436 Cr",  desc: "FY2020 turnover" },
+        StatItem { label: "Peak Revenue",       value: "\u{20b9}436 Cr",  desc: "FY2020 turnover" },
         StatItem { label: "Credit Rating",      value: "A3+",       desc: "CRISIL short-term" },
         StatItem { label: "LC-Backed Revenue",  value: "95%+",      desc: "Letter of Credit secured" },
     ]
 }
 
 // ---------------------------------------------------------------------------
-// Certifications
+// Certifications — derived from frontend/content/certifications.toml
 // ---------------------------------------------------------------------------
 
-#[derive(Clone, PartialEq, Debug)]
-pub struct CertConfig {
-    pub name: &'static str,
-    pub icon: &'static str,
+pub use crate::certifications::{CertificationsConfig, CertLayout, CertEntry, load_config as load_cert_config};
+
+/// Load the full certifications config (layout + entries) from TOML.
+pub fn cert_config() -> CertificationsConfig {
+    load_cert_config()
 }
 
-pub fn certifications() -> Vec<CertConfig> {
-    vec![
-        CertConfig { name: "BAP 4-Star", icon: "\u{2605}\u{2605}\u{2605}\u{2605}" },
-        CertConfig { name: "BRC AA",     icon: "\u{2713}" },
-        CertConfig { name: "ASC",        icon: "\u{2713}" },
-        CertConfig { name: "HACCP",      icon: "\u{2713}" },
-        CertConfig { name: "EU Approved", icon: "\u{2713}" },
-    ]
+/// Convenience: returns just the cert entries list.
+pub fn certifications() -> Vec<CertEntry> {
+    load_cert_config().certs
+}
+
+/// Convenience: returns just the layout settings.
+pub fn cert_layout() -> CertLayout {
+    load_cert_config().layout
 }
 
 // ---------------------------------------------------------------------------
@@ -212,7 +160,7 @@ pub fn faqs() -> Vec<FaqItem> {
         },
         FaqItem {
             question: "Is Alashore Marine Exports financially rated?",
-            answer: "Yes. Alashore Marine Exports holds a CRISIL A3+ short-term credit rating, backed by a ₹100 Crore credit facility from The Federal Bank. The company's current ratio stands at 2.16x with peak revenue of ₹436 Crore (FY2020).",
+            answer: "Yes. Alashore Marine Exports holds a CRISIL A3+ short-term credit rating, backed by a \u{20b9}100 Crore credit facility from The Federal Bank. The company's current ratio stands at 2.16x with peak revenue of \u{20b9}436 Crore (FY2020).",
         },
         FaqItem {
             question: "What certifications does Alashore Marine hold?",
@@ -221,6 +169,89 @@ pub fn faqs() -> Vec<FaqItem> {
         FaqItem {
             question: "Which countries does Alashore Marine supply to?",
             answer: "Alashore Marine exports to 30+ countries including the USA, all 27 EU member states, Japan, South Korea, Australia, UAE, Saudi Arabia, and Southeast Asia. Over 95% of export revenue is secured by Letters of Credit.",
+        },
+    ]
+}
+
+// ---------------------------------------------------------------------------
+// Growth Milestones (Journey Timeline)
+// ---------------------------------------------------------------------------
+
+#[derive(Clone, PartialEq, Debug)]
+pub struct GrowthMilestone {
+    pub year: u16,
+    pub title: &'static str,
+    pub description: &'static str,
+    pub metric_label: Option<&'static str>,
+    pub metric_value: Option<&'static str>,
+    pub icon: &'static str,
+    pub highlight: bool,
+}
+
+pub fn growth_milestones() -> Vec<GrowthMilestone> {
+    vec![
+        GrowthMilestone {
+            year: 2012,
+            title: "Founded in Balasore",
+            description: "Incorporated as Accenture Marine Exports. First processing unit at Somnathpur Industrial Estate, Odisha.",
+            metric_label: Some("Capacity"),
+            metric_value: Some("20 MT/day"),
+            icon: "anchor",
+            highlight: false,
+        },
+        GrowthMilestone {
+            year: 2014,
+            title: "EU Market Entry",
+            description: "Secured MPEDA registration and EU Establishment Approval. First shipments to Spain and Italy.",
+            metric_label: Some("Markets"),
+            metric_value: Some("5+"),
+            icon: "globe",
+            highlight: false,
+        },
+        GrowthMilestone {
+            year: 2016,
+            title: "BAP 4-Star & USA",
+            description: "Achieved BAP 4-Star certification. Commenced exports to the United States. Capacity scaled to 80 MT/day.",
+            metric_label: Some("Capacity"),
+            metric_value: Some("80 MT/day"),
+            icon: "star",
+            highlight: false,
+        },
+        GrowthMilestone {
+            year: 2018,
+            title: "BRC AA & ASC Certified",
+            description: "BRC Grade AA for food safety. ASC certification for sustainability. In-house EIA-approved lab opened.",
+            metric_label: Some("Certifications"),
+            metric_value: Some("6+"),
+            icon: "shield",
+            highlight: false,
+        },
+        GrowthMilestone {
+            year: 2019,
+            title: "Rebranded to Alashore",
+            description: "Rebranded to Alashore Marine Exports Pvt. Ltd. Secured \u{20b9}100 Crore Federal Bank credit facility.",
+            metric_label: Some("Credit"),
+            metric_value: Some("\u{20b9}100 Cr"),
+            icon: "refresh",
+            highlight: false,
+        },
+        GrowthMilestone {
+            year: 2020,
+            title: "Peak Revenue",
+            description: "Record turnover of \u{20b9}436 Crore. 800+ workforce. 150 MT/day capacity. CRISIL A3+ rating.",
+            metric_label: Some("Revenue"),
+            metric_value: Some("\u{20b9}436 Cr"),
+            icon: "trending-up",
+            highlight: true,
+        },
+        GrowthMilestone {
+            year: 2024,
+            title: "Global Expansion",
+            description: "Exporting to 30+ countries. Ongoing vertical integration investments. Digital infrastructure launched.",
+            metric_label: Some("Markets"),
+            metric_value: Some("30+"),
+            icon: "globe",
+            highlight: false,
         },
     ]
 }
@@ -266,13 +297,9 @@ pub const COMPANY: CompanyInfo = CompanyInfo {
 // Product Inquiry List
 // ---------------------------------------------------------------------------
 
-pub fn inquiry_products() -> Vec<(&'static str, &'static str)> {
-    vec![
-        ("vannamei-shrimp", "Vannamei Whiteleg Shrimp"),
-        ("black-tiger-shrimp", "Black Tiger Prawn"),
-        ("squid", "Indian Squid"),
-        ("cuttlefish", "Cuttlefish"),
-        ("pink-perch", "Pink Perch (Threadfin Bream)"),
-        ("dried-shrimp", "Sun-Dried Shrimp"),
-    ]
+pub fn inquiry_products() -> Vec<(String, String)> {
+    all_products()
+        .into_iter()
+        .map(|p| (p.id, p.name))
+        .collect()
 }

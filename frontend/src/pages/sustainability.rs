@@ -48,7 +48,9 @@ pub fn SustainabilityPage() -> Element {
 
         // Pillars — structured for AI fact extraction
         section { class: "sustainability-pillars", "aria-labelledby": "pillars-heading",
-            h2 { id: "pillars-heading", class: "section-title", "Our Four Sustainability Pillars" }
+            div { class: "section-header",
+                h2 { id: "pillars-heading", class: "section-title", "Our Four Sustainability Pillars" }
+            }
 
             div { class: "pillars-grid",
                 article { class: "pillar-card",
@@ -105,7 +107,9 @@ pub fn SustainabilityPage() -> Element {
 
         // Traceability chain — AI loves structured process chains
         section { class: "traceability-section", "aria-labelledby": "trace-heading",
-            h2 { id: "trace-heading", class: "section-title", "Full Chain Traceability" }
+            div { class: "section-header",
+                h2 { id: "trace-heading", class: "section-title", "Full Chain Traceability" }
+            }
             p { class: "section-subtitle",
                 "Every shipment carries a full lot-code traceable back to the specific pond,
                 harvest date, and batch number."
@@ -157,7 +161,9 @@ pub fn SustainabilityPage() -> Element {
 
         // Certifications cross-reference
         section { class: "sustainability-certs",
-            h2 { class: "section-title", "Sustainability Certifications" }
+            div { class: "section-header",
+                h2 { class: "section-title", "Sustainability Certifications" }
+            }
             div { class: "sus-cert-grid",
                 div { class: "sus-cert-item",
                     h3 { "ASC — Aquaculture Stewardship Council" }

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e1a30"/>
+      <stop offset="100%" stop-color="#1a2840"/>
+    </linearGradient>
+    <linearGradient id="cuttle1" x1="250" y1="150" x2="550" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8b7060"/>
+      <stop offset="40%" stop-color="#a08570"/>
+      <stop offset="100%" stop-color="#6d5545"/>
+    </linearGradient>
+    <radialGradient id="glow4" cx="400" cy="280" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(120,80,200,0.1)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <filter id="shadow4" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="16" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg4)"/>
+  <circle cx="400" cy="280" r="260" fill="url(#glow4)"/>
+  <g filter="url(#shadow4)">
+    <!-- Broad mantle -->
+    <ellipse cx="400" cy="250" rx="180" ry="130" fill="url(#cuttle1)" stroke="#6d5545" stroke-width="1.5"/>
+    <!-- Undulating fin border -->
+    <path d="M220,250 C210,210 200,170 210,140 C215,125 225,120 235,130 C250,150 245,190 240,230" fill="#a08570" stroke="#6d5545" stroke-width="1" opacity="0.8"/>
+    <path d="M580,250 C590,210 600,170 590,140 C585,125 575,120 565,130 C550,150 555,190 560,230" fill="#a08570" stroke="#6d5545" stroke-width="1" opacity="0.8"/>
+    <!-- Fin wave effect -->
+    <path d="M220,250 C205,280 200,310 215,340 C225,358 240,355 245,340 C250,320 245,290 240,270" fill="#8b7060" stroke="#6d5545" stroke-width="1" opacity="0.7"/>
+    <path d="M580,250 C595,280 600,310 585,340 C575,358 560,355 555,340 C550,320 555,290 560,270" fill="#8b7060" stroke="#6d5545" stroke-width="1" opacity="0.7"/>
+    <!-- Mantle pattern (zebra/mottled) -->
+    <g opacity="0.3">
+      <ellipse cx="340" cy="220" rx="25" ry="15" fill="#5a4535" transform="rotate(-10,340,220)"/>
+      <ellipse cx="400" cy="200" rx="20" ry="12" fill="#5a4535"/>
+      <ellipse cx="460" cy="220" rx="25" ry="15" fill="#5a4535" transform="rotate(10,460,220)"/>
+      <ellipse cx="370" cy="265" rx="22" ry="14" fill="#5a4535" transform="rotate(-5,370,265)"/>
+      <ellipse cx="430" cy="265" rx="22" ry="14" fill="#5a4535" transform="rotate(5,430,265)"/>
+      <ellipse cx="350" cy="310" rx="20" ry="12" fill="#5a4535"/>
+      <ellipse cx="400" cy="300" rx="18" ry="10" fill="#5a4535"/>
+      <ellipse cx="450" cy="310" rx="20" ry="12" fill="#5a4535"/>
+    </g>
+    <!-- W-shaped pupil eyes -->
+    <g>
+      <ellipse cx="340" cy="180" rx="20" ry="24" fill="#0d1520" stroke="#8b7060" stroke-width="1.5"/>
+      <path d="M325,180 C330,172 335,178 340,172 C345,178 350,172 355,180" stroke="#2a8040" stroke-width="2.5" fill="none"/>
+      <ellipse cx="342" cy="176" rx="4" ry="5" fill="#fff" opacity="0.5"/>
+      <ellipse cx="460" cy="180" rx="20" ry="24" fill="#0d1520" stroke="#8b7060" stroke-width="1.5"/>
+      <path d="M445,180 C450,172 455,178 460,172 C465,178 470,172 475,180" stroke="#2a8040" stroke-width="2.5" fill="none"/>
+      <ellipse cx="462" cy="176" rx="4" ry="5" fill="#fff" opacity="0.5"/>
+    </g>
+    <!-- Arms & tentacles -->
+    <g stroke-linecap="round" fill="none">
+      <path d="M360,380 C355,410 345,445 330,475 C320,495 325,510 335,505" stroke="#a08570" stroke-width="5"/>
+      <path d="M380,382 C378,415 372,450 365,480 C360,500 365,512 372,508" stroke="#8b7060" stroke-width="4.5"/>
+      <path d="M400,384 C400,418 400,455 400,490 C400,510 405,515 410,508" stroke="#8b7060" stroke-width="4.5"/>
+      <path d="M420,382 C422,415 428,450 435,480 C440,500 435,512 428,508" stroke="#8b7060" stroke-width="4.5"/>
+      <path d="M440,380 C445,410 455,445 470,475 C480,495 475,510 465,505" stroke="#a08570" stroke-width="5"/>
+      <!-- Long hunting tentacles -->
+      <path d="M350,378 C330,420 290,470 260,500 C240,520 235,535 250,535 C265,535 285,510 310,480" stroke="#6d5545" stroke-width="3.5"/>
+      <path d="M450,378 C470,420 510,470 540,500 C560,520 565,535 550,535 C535,535 515,510 490,480" stroke="#6d5545" stroke-width="3.5"/>
+      <!-- Club tips -->
+      <ellipse cx="255" cy="520" rx="12" ry="6" fill="#a08570" opacity="0.7" transform="rotate(-30,255,520)"/>
+      <ellipse cx="545" cy="520" rx="12" ry="6" fill="#a08570" opacity="0.7" transform="rotate(30,545,520)"/>
+    </g>
+    <!-- Iridescent spots -->
+    <g opacity="0.25">
+      <circle cx="320" cy="240" r="4" fill="#60a0c0"/>
+      <circle cx="400" cy="230" r="3" fill="#8060c0"/>
+      <circle cx="480" cy="240" r="4" fill="#60a0c0"/>
+      <circle cx="360" cy="290" r="3" fill="#8060c0"/>
+      <circle cx="440" cy="290" r="3" fill="#60a0c0"/>
+    </g>
+  </g>
+  <g opacity="0.12">
+    <circle cx="140" cy="380" r="4" fill="#8060c0"/>
+    <circle cx="660" cy="140" r="3" fill="#8060c0"/>
+    <circle cx="130" cy="160" r="2" fill="#60a0c0"/>
+  </g>
+  <text x="400" y="565" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="18" font-weight="500" fill="rgba(255,255,255,0.7)">Cuttlefish · Sepia pharaonis</text>
+</svg>

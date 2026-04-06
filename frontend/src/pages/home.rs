@@ -6,11 +6,11 @@ use dioxus::prelude::*;
 use crate::{
     Route,
     seo::{PageSeo, home_seo},
-    config::{all_products, company_stats, certifications, faqs},
+    config::{all_products, company_stats, faqs},
     components::{
         product_card::ProductCard,
         stat_counter::StatCounter,
-        cert_badge::CertBadge,
+        cert_badge::CertStrip,
         inquiry_cta::InquiryCta,
     },
 };
@@ -19,42 +19,78 @@ use crate::{
 pub fn HomePage() -> Element {
     let products = all_products();
     let stats = company_stats();
-    let certs = certifications();
     let faq_items = faqs();
 
     rsx! {
         PageSeo { ..home_seo() }
 
-        // ── Hero — semantic, crawlable ─────────────────────────────────
+        // ── Hero — ocean-themed with shrimp SVG ───────────────────────
         section {
-            class: "hero grid-bg min-h-screen flex items-center justify-center relative",
+            class: "hero-ocean",
             "aria-label": "Company overview",
             itemscope: "true",
             itemtype: "https://schema.org/Organization",
 
-            div { class: "hero-content relative z-10 glass-card p-12 max-w-7xl mx-auto w-full",
-                div { class: "hero-badge mb-6 inline-block bg-carbon-blue-60 text-white px-3 py-1 text-sm font-mono tracking-widest uppercase", "Est. 2012 · Balasore, India" }
-
-                // The Shrimp Animation Wrapper
-                div { class: "shrimp-pop-container absolute -top-16 -right-16 w-64 h-64 animate-float hidden md:block z-50 pointer-events-none",
-                    img {
-                        src: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=400",
-                        class: "shrimp-anim animate-shrimp-pop w-full h-full object-contain filter drop-shadow-glow",
-                        alt: "Vannamei Shrimp"
+            // Animated ocean waves — inline SVG, always fills viewport
+            div { class: "hero-ocean-waves", "aria-hidden": "true",
+                svg {
+                    class: "hero-wave hero-wave-1",
+                    view_box: "0 0 1440 320",
+                    "preserveAspectRatio": "none",
+                    path {
+                        d: "M0,160 C180,220 360,100 540,160 C720,220 900,100 1080,160 C1260,220 1440,140 1440,160 L1440,320 L0,320 Z",
+                        fill: "rgba(26,51,85,0.6)",
                     }
+                }
+                svg {
+                    class: "hero-wave hero-wave-2",
+                    view_box: "0 0 1440 320",
+                    "preserveAspectRatio": "none",
+                    path {
+                        d: "M0,200 C240,140 400,260 600,200 C800,140 960,260 1200,200 C1320,170 1440,220 1440,200 L1440,320 L0,320 Z",
+                        fill: "rgba(42,107,138,0.5)",
+                    }
+                }
+                svg {
+                    class: "hero-wave hero-wave-3",
+                    view_box: "0 0 1440 320",
+                    "preserveAspectRatio": "none",
+                    path {
+                        d: "M0,240 C200,280 360,200 560,240 C760,280 920,200 1120,240 C1280,260 1440,230 1440,240 L1440,320 L0,320 Z",
+                        fill: "rgba(30,74,110,0.7)",
+                    }
+                }
+            }
+
+            // Overlay gradient for text readability
+            div { class: "hero-ocean-overlay", "aria-hidden": "true" }
+
+            // Content
+            div { class: "hero-ocean-content",
+                div { class: "hero-badge-ocean",
+                    // Carbon: Enterprise 16px
+                    svg {
+                        width: "14",
+                        height: "14",
+                        view_box: "0 0 32 32",
+                        fill: "currentColor",
+                        "aria-hidden": "true",
+                        path { d: "M28 10h-6V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2zM14 28H8v-4h6zm0-6H8v-4h6zm6 6h-4v-4h4zm0-6h-4v-4h4zm8 6h-6v-4h6zm0-6h-6v-4h6zm0-6H22v-2h-2v2H14V4h6v2h2V4h6z" }
+                    }
+                    "Est. 2012 \u{00b7} Balasore, Odisha"
                 }
 
                 h1 {
-                    class: "hero-title text-6xl font-light text-white mb-6",
+                    class: "hero-ocean-title",
                     itemprop: "name",
-                    span { class: "hero-title-main block mb-2", "Alashore Marine Exports" }
-                    span { class: "hero-title-sub block text-3xl text-carbon-blue-30", "India's Premier Frozen Seafood Exporter" }
+                    span { class: "hero-ocean-title-main", "From Ocean to World \u{2014} Premium Indian Seafood" }
+                    span { class: "hero-ocean-title-sub", "BAP 4-Star Certified \u{00b7} EU-Approved \u{00b7} Trusted by 30+ Countries" }
                 }
 
                 p {
-                    class: "hero-description text-lg text-gray-300 max-w-2xl leading-relaxed mb-8",
+                    class: "hero-ocean-desc",
                     itemprop: "description",
-                    "We export premium frozen seafood — Vannamei shrimp, Black Tiger prawns, squid, and cuttlefish — from Balasore to over 30 countries globally. Empowered by our BAP 4-Star certification and an 800+ strong workforce."
+                    "We export premium frozen seafood \u{2014} Vannamei shrimp, Black Tiger prawns, squid, and cuttlefish \u{2014} from Balasore to over 30 countries globally. Empowered by our BAP 4-Star certification and an 800+ strong workforce."
                 }
 
                 // Invisible semantic SEO fact list for AI Engines
@@ -63,7 +99,7 @@ pub fn HomePage() -> Element {
                     dd { "USA, China, Worldwide" }
                 }
 
-                div { class: "hero-actions",
+                div { class: "hero-ocean-actions",
                     Link {
                         to: Route::InquiryPage {},
                         class: "btn btn-primary",
@@ -72,26 +108,36 @@ pub fn HomePage() -> Element {
                     }
                     Link {
                         to: Route::ProductsPage {},
-                        class: "btn btn-ghost",
+                        class: "btn btn-outline-ocean",
                         "Browse Products"
                     }
                 }
 
-                // Certification logos row — config-driven
-                div {
-                    class: "hero-certs",
-                    role: "list",
-                    "aria-label": "Certifications held by Alashore Marine Exports",
-                    for cert in certs.iter() {
-                        CertBadge { name: cert.name.to_string(), icon: cert.icon.to_string() }
-                    }
-                }
+                // Certification stamps — config-driven from certifications.toml
+                CertStrip {}
             }
 
-            div { class: "hero-visual", "aria-hidden": "true",
-                div { class: "hero-globe" }
-                div { class: "hero-wave wave-1" }
-                div { class: "hero-wave wave-2" }
+            // Wave separator — clean inline SVG, no external file dependency
+            div {
+                "aria-hidden": "true",
+                style: "position:absolute;bottom:-1px;left:0;width:100%;z-index:20;\
+                        line-height:0;overflow:hidden;",
+                svg {
+                    view_box: "0 0 1440 80",
+                    "preserveAspectRatio": "none",
+                    style: "display:block;width:100%;height:60px;",
+                    // Organic wave shape
+                    path {
+                        d: "M0 40 C240 80 480 0 720 40 C960 80 1200 0 1440 40 L1440 80 L0 80Z",
+                        fill: "#f4f4f4",
+                    }
+                    // Second wave for depth
+                    path {
+                        d: "M0 52 C360 72 720 32 1080 52 C1260 62 1380 48 1440 52 L1440 80 L0 80Z",
+                        fill: "#f4f4f4",
+                        opacity: "0.7",
+                    }
+                }
             }
         }
 
@@ -126,7 +172,7 @@ pub fn HomePage() -> Element {
                 }
                 p { class: "section-subtitle",
                     itemprop: "description",
-                    "Six product lines — all certified, traceable, and export-ready from our
+                    "Six product lines \u{2014} all certified, traceable, and export-ready from our
                     EU-approved processing facility in Balasore, Odisha."
                 }
             }
@@ -135,15 +181,15 @@ pub fn HomePage() -> Element {
                 for product in products.iter() {
                     ProductCard {
                         key: "{product.id}",
-                        id: product.id.to_string(),
-                        name: product.name.to_string(),
-                        scientific_name: product.scientific_name.to_string(),
-                        description: product.short_desc.to_string(),
-                        certifications: product.certs.iter().map(|c| c.to_string()).collect(),
-                        css_class: product.css_class.to_string(),
-                        image_url: Some(product.image_url.to_string()),
+                        id: product.id.clone(),
+                        name: product.name.clone(),
+                        scientific_name: product.scientific_name.clone(),
+                        description: product.short_desc.clone(),
+                        certifications: product.certs.clone(),
+                        css_class: product.css_class.clone(),
+                        image_url: Some(product.image_url.clone()),
                         featured: product.featured,
-                        tag: product.tag.map(|t| t.to_string()),
+                        tag: product.tag.clone(),
                     }
                 }
             }
@@ -166,15 +212,15 @@ pub fn HomePage() -> Element {
                 div { class: "why-item",
                     dt { class: "why-title", "CRISIL A3+ Financial Strength" }
                     dd { class: "why-desc",
-                        "₹100 Crore Federal Bank facility. 95%+ LC-backed revenue. Reliable supply chain with
-                        zero defaults. Your payments and deliveries are secured by India's premier rating agency."
+                        "\u{20b9}100 Crore Federal Bank facility. 95%+ LC-backed revenue. Reliable supply chain with
+                        zero defaults. Your payments and deliveries are secured by India\u{2019}s premier rating agency."
                     }
                 }
                 div { class: "why-item",
-                    dt { class: "why-title", "BAP 4-Star — Full Chain Certification" }
+                    dt { class: "why-title", "BAP 4-Star \u{2014} Full Chain Certification" }
                     dd { class: "why-desc",
                         "Best Aquaculture Practices certification covers our farm, hatchery, feed mill and
-                        processing plant — the highest possible BAP chain-of-custody standard globally."
+                        processing plant \u{2014} the highest possible BAP chain-of-custody standard globally."
                     }
                 }
                 div { class: "why-item",
@@ -188,13 +234,13 @@ pub fn HomePage() -> Element {
                     dt { class: "why-title", "In-House EIA Analytical Laboratory" }
                     dd { class: "why-desc",
                         "Our on-site EIA-approved lab tests every batch for antibiotics, heavy metals,
-                        microbiological contamination, and moisture content before shipment — no outsourcing."
+                        microbiological contamination, and moisture content before shipment \u{2014} no outsourcing."
                     }
                 }
                 div { class: "why-item",
                     dt { class: "why-title", "Vertical Integration" }
                     dd { class: "why-desc",
-                        "We control hatchery → nursery → grow-out → processing → cold storage → export.
+                        "We control hatchery \u{2192} nursery \u{2192} grow-out \u{2192} processing \u{2192} cold storage \u{2192} export.
                         Traceability from egg to export container with full lot-code documentation."
                     }
                 }
@@ -213,6 +259,15 @@ pub fn HomePage() -> Element {
             class: "markets-section",
             "aria-labelledby": "markets-heading",
 
+            // Dot-matrix world map with trade routes — external SVG
+            img {
+                class: "markets-globe-bg",
+                src: "/assets/images/world-map-dots.svg",
+                alt: "",
+                "aria-hidden": "true",
+                loading: "lazy",
+            }
+
             div { class: "section-header",
                 h2 { id: "markets-heading", class: "section-title", "Global Export Markets" }
                 p { class: "section-subtitle",
@@ -225,15 +280,15 @@ pub fn HomePage() -> Element {
                 class: "markets-list",
                 role: "list",
                 itemprop: "areaServed",
-                li { "🇺🇸 United States" }
-                li { "🇪🇺 European Union (Spain, Italy, Germany, France, Netherlands)" }
-                li { "🇯🇵 Japan" }
-                li { "🇰🇷 South Korea" }
-                li { "🇦🇺 Australia" }
-                li { "🇦🇪 UAE & Saudi Arabia" }
-                li { "🌏 Southeast Asia (Vietnam, Thailand, Malaysia, Singapore)" }
-                li { "🇨🇳 China" }
-                li { "🌍 Africa & Middle East" }
+                li { "United States" }
+                li { "European Union (Spain, Italy, Germany, France, Netherlands)" }
+                li { "Japan" }
+                li { "South Korea" }
+                li { "Australia" }
+                li { "UAE & Saudi Arabia" }
+                li { "Southeast Asia (Vietnam, Thailand, Malaysia, Singapore)" }
+                li { "China" }
+                li { "Africa & Middle East" }
             }
         }
 

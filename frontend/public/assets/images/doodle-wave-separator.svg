@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3840 2160" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Realistic Shrimp with Doodle Wave Separator - 4K Seafood Export Background">
+
+  <!-- 🌍 SEO & AI METADATA -->
+  <title>Realistic Shrimp with Doodle Wave Separator | 4K Seafood Export Hero</title>
+  <desc>A premium 4K vector illustration featuring a realistic cooked shrimp floating above a dynamic, hand-drawn doodle wave separator. Optimized for seafood export landing pages with responsive scaling and minimal animation.</desc>
+  <metadata>
+    <meta name="description" content="High-quality 4K seafood export hero SVG with realistic shrimp and unique doodle-style wavy bottom separator. Responsive, lightweight, and SEO-optimized."/>
+    <meta name="keywords" content="seafood export, 4k svg, realistic shrimp, doodle wave separator, responsive vector, marine export, landing page background, hand-drawn svg"/>
+    <meta name="theme-color" content="#FAFAFA"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="designer" content="AI Vector Generator"/>
+    <meta name="resolution" content="3840x2160"/>
+    <meta name="responsive" content="true"/>
+  </metadata>
+
+  <defs>
+    <!-- 🎨 GRADIENTS -->
+    <linearGradient id="shrimp-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9F76"/>
+      <stop offset="40%" stop-color="#E85D3A"/>
+      <stop offset="80%" stop-color="#D44526"/>
+      <stop offset="100%" stop-color="#A83215"/>
+    </linearGradient>
+    <linearGradient id="shrimp-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="doodle-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8F4F8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#D0E8F2" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="20" flood-color="#00334D" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- 🦐 DETAILED SHRIMP PATH -->
+    <g id="shrimp-asset">
+      <g fill="#C24328" opacity="0.9">
+        <path d="M 500 760 C 460 840, 440 920, 500 960 C 520 940, 500 840, 540 760 Z"/>
+        <path d="M 560 700 C 520 780, 500 860, 560 900 C 580 880, 560 780, 600 700 Z"/>
+        <path d="M 620 660 C 580 740, 560 820, 620 860 C 640 840, 620 740, 660 660 Z"/>
+        <path d="M 680 640 C 640 720, 620 800, 680 840 C 700 820, 680 720, 720 640 Z"/>
+        <path d="M 760 620 C 720 700, 700 780, 760 820 C 780 800, 760 700, 800 620 Z"/>
+      </g>
+      <path d="M 760 440 C 900 440, 1000 500, 1040 600 C 1080 700, 1040 840, 960 920 C 880 1000, 760 1040, 640 960 C 520 880, 440 720, 480 560 C 520 400, 640 440, 760 440 Z" fill="url(#shrimp-body)" stroke="#8A2010" stroke-width="4"/>
+      <g fill="none" stroke="#8A2010" stroke-width="4" stroke-linecap="round" opacity="0.4">
+        <path d="M 660 450 C 680 560, 640 700, 560 760"/>
+        <path d="M 720 440 C 760 560, 720 720, 640 800"/>
+        <path d="M 800 450 C 860 580, 820 740, 720 840"/>
+        <path d="M 880 480 C 960 620, 920 800, 820 900"/>
+        <path d="M 960 540 C 1040 680, 1000 840, 920 940"/>
+      </g>
+      <g fill="url(#shrimp-body)" stroke="#8A2010" stroke-width="4">
+        <path d="M 480 560 C 360 520, 240 440, 160 400 C 260 460, 360 580, 440 640 Z"/>
+        <path d="M 480 560 C 360 640, 240 720, 160 760 C 260 700, 360 600, 440 540 Z"/>
+        <path d="M 440 600 C 360 600, 240 560, 180 520 C 260 560, 360 640, 440 600 Z"/>
+      </g>
+      <path d="M 960 540 C 1100 520, 1300 480, 1440 460 L 1450 470 C 1300 500, 1100 560, 960 580 Z" fill="#D44526"/>
+      <circle cx="1000" cy="500" r="16" fill="#1A0505"/>
+      <circle cx="1004" cy="496" r="4" fill="#FFFFFF"/>
+      <g fill="none" stroke="#D44526" stroke-width="6" stroke-linecap="round">
+        <path d="M 960 540 C 1200 700, 1300 1000, 1200 1200" opacity="0.8"/>
+        <path d="M 980 520 C 1300 600, 1500 800, 1500 1100" opacity="0.6"/>
+      </g>
+      <path d="M 600 500 C 700 480, 800 500, 900 560 C 800 520, 700 520, 600 560 Z" fill="url(#shrimp-highlight)" opacity="0.6"/>
+      <path d="M 560 600 C 640 620, 720 640, 800 680 C 700 660, 600 620, 540 640 Z" fill="url(#shrimp-highlight)" opacity="0.4"/>
+      <path d="M 700 760 C 760 780, 800 840, 840 880 C 780 840, 740 800, 700 780 Z" fill="url(#shrimp-highlight)" opacity="0.3"/>
+    </g>
+  </defs>
+
+  <style>
+    /* 🌊 MINIMAL ANIMATIONS */
+    .float-shrimp {
+      animation: float 6s ease-in-out infinite;
+      transform-origin: center;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(1.5deg); }
+    }
+
+    /* Doodle Wave Drift */
+    .doodle-wave {
+      animation: wave-drift 24s linear infinite;
+      transform-origin: 0 0;
+    }
+    @keyframes wave-drift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-600px); }
+    }
+
+    /* Responsive Scaling */
+    @media (max-width: 1920px) {
+      .float-shrimp { animation-duration: 5s; }
+    }
+  </style>
+
+  <!-- 1. Background -->
+  <rect width="100%" height="100%" fill="#FAFAFA"/>
+
+  <!-- 2. Shrimp Layer (Centered) -->
+  <g class="float-shrimp" transform="translate(1920, 1080) scale(1)">
+    <g transform="translate(-800, -600)">
+      <use href="#shrimp-asset" xlink:href="#shrimp-asset" filter="url(#shadow)"/>
+    </g>
+  </g>
+
+  <!-- 3. Subtle Upper Water Tint (Non-intrusive) -->
+  <path d="M 0 1600 Q 480 1550, 960 1600 T 1920 1600 T 2880 1600 T 3840 1600 V 2160 H 0 Z" fill="#E8F4F8" opacity="0.3"/>
+
+  <!-- 4. 🎨 DOODLE WAVE SEPARATOR (Dynamic Width, Heavy Line) -->
+  <g id="doodle-separator" transform="translate(0, 1920)">
+    <!-- Main Heavy Doodle Wave -->
+    <path class="doodle-wave" d="M -200 80 
+              C 50 20, 250 140, 400 80 
+              C 550 20, 750 140, 900 80 
+              C 1050 20, 1250 140, 1400 80 
+              C 1550 20, 1750 140, 1900 80 
+              C 2050 20, 2250 140, 2400 80 
+              C 2550 20, 2750 140, 2900 80 
+              C 3050 20, 3250 140, 3400 80 
+              C 3550 20, 3750 140, 3900 80 
+              C 4050 20, 4250 140, 4400 80" 
+          fill="url(#doodle-fill)" stroke="#1A4A6E" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+    
+    <!-- Secondary Sketch Line (Hand-drawn feel) -->
+    <path class="doodle-wave" d="M -200 110 
+              C 50 60, 250 160, 400 110 
+              C 550 60, 750 160, 900 110 
+              C 1050 60, 1250 160, 1400 110 
+              C 1550 60, 1750 160, 1900 110 
+              C 2050 60, 2250 160, 2400 110 
+              C 2550 60, 2750 160, 2900 110 
+              C 3050 60, 3250 160, 3400 110 
+              C 3550 60, 3750 160, 3900 110 
+              C 4050 60, 4250 160, 4400 110" 
+          fill="none" stroke="#3A7CA5" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Doodle Accents (Dots & Tiny Curves) -->
+    <g class="doodle-wave" fill="#1A4A6E" opacity="0.6">
+      <circle cx="100" cy="90" r="8"/>
+      <circle cx="400" cy="70" r="5"/>
+      <circle cx="700" cy="100" r="7"/>
+      <circle cx="1000" cy="85" r="6"/>
+      <circle cx="1300" cy="65" r="9"/>
+      <circle cx="1600" cy="95" r="5"/>
+      <circle cx="1900" cy="75" r="8"/>
+      <circle cx="2200" cy="105" r="6"/>
+      <circle cx="2500" cy="80" r="7"/>
+      <circle cx="2800" cy="60" r="5"/>
+      <circle cx="3100" cy="90" r="8"/>
+      <circle cx="3400" cy="70" r="6"/>
+      <circle cx="3700" cy="100" r="9"/>
+      <circle cx="4000" cy="85" r="5"/>
+    </g>
+    <g class="doodle-wave" fill="none" stroke="#2A6B8A" stroke-width="4" stroke-linecap="round" opacity="0.5">
+      <path d="M 250 60 Q 270 40, 290 60"/>
+      <path d="M 850 50 Q 870 30, 890 50"/>
+      <path d="M 1450 60 Q 1470 40, 1490 60"/>
+      <path d="M 2050 50 Q 2070 30, 2090 50"/>
+      <path d="M 2650 60 Q 2670 40, 2690 60"/>
+      <path d="M 3250 50 Q 3270 30, 3290 50"/>
+      <path d="M 3850 60 Q 3870 40, 3890 60"/>
+    </g>
+  </g>
+
+</svg>
