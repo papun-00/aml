@@ -41,8 +41,11 @@ jobs:
       - name: Install Dioxus CLI
         run: cargo install dioxus-cli --locked
 
-      - name: Install Node deps
-        run: npm install -g tailwindcss@3
+      - name: Install Tailwind CSS v4 standalone CLI
+        run: |
+          curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.2.2/tailwindcss-linux-x64
+          chmod +x tailwindcss-linux-x64
+          sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 
       - name: Build Tailwind CSS
         run: cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css && cp ./assets/css/main.css ./public/assets/css/main.css
