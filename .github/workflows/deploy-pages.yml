@@ -48,7 +48,7 @@ jobs:
           sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 
       - name: Build Tailwind CSS
-        run: cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css && cp ./assets/css/main.css ./public/assets/css/main.css
+        run: cd frontend && tailwindcss -i ./input.css -o ./assets/css/main.css && mkdir -p ./public/assets/css && cp ./assets/css/main.css ./public/assets/css/main.css
 
       - name: Build frontend
         run: cd frontend && dx build --release
