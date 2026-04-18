@@ -45,9 +45,9 @@ Pick the **first unblocked** task. Mark `[x]` when done.
 - [ ] **Accessibility audit** — Ensure WCAG 2.1 AA compliance. Keyboard navigation, ARIA labels, focus management, skip links, screen reader testing.
 
 ### Phase 3 — Production Readiness
+- [x] **CI/CD pipeline** — GitHub Actions with 5 jobs: security audit (cargo-audit), test & lint (clippy + fmt + tests), build (optimized release), deploy (GitHub Pages), verify (post-deployment). Includes OWASP security headers, CSP, SPA routing support. See `docs/DEPLOYMENT.md` for details.
 - [ ] **PostgreSQL support** — Add feature flag for PostgreSQL alongside SQLite. Conditional compilation in db.rs.
 - [ ] **Docker production build** — Verify multi-stage Dockerfile builds and runs correctly. Add health check endpoint to docker-compose.
-- [ ] **CI/CD pipeline** — GitHub Actions: cargo check, clippy, test, build. PR checks.
 - [ ] **Monitoring & observability** — Add Prometheus metrics endpoint. Request duration, error rate, active connections.
 - [ ] **SEO static generation** — Pre-render critical pages to static HTML for instant LCP. Serve from nginx.
 

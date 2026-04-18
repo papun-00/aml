@@ -5,8 +5,7 @@ out_dir = "dist"
 
 [web.app]
 title = "Alashore Marine Exports | Premium Seafood Exporter, India"
-# base_path = "alashore-marine-pvt-ltd"  # PRODUCTION ONLY: Uncomment for GitHub Pages deployment
-# For local development, base_path should NOT be set (serves from root /)
+base_path = "alashore-marine-pvt-ltd"  # GitHub Pages repository path
 
 [web.watcher]
 reload_html = true
