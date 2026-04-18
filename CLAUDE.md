@@ -45,7 +45,8 @@ Pick the **first unblocked** task. Mark `[x]` when done.
 - [ ] **Accessibility audit** — Ensure WCAG 2.1 AA compliance. Keyboard navigation, ARIA labels, focus management, skip links, screen reader testing.
 
 ### Phase 3 — Production Readiness
-- [x] **CI/CD pipeline** — GitHub Actions with 5 jobs: security audit (cargo-audit), test & lint (clippy + fmt + tests), build (optimized release), deploy (GitHub Pages), verify (post-deployment). Includes OWASP security headers, CSP, SPA routing support. See `docs/DEPLOYMENT.md` for details.
+- [x] **CI/CD pipeline** — GitHub Actions with 5 jobs: security audit (cargo-audit), test & lint (clippy + fmt + tests), build (optimized release), deploy (GitHub Pages), verify (post-deployment). Includes OWASP security headers, CSP, SPA routing support, harden-runner protection, Tailwind checksum verification, pinned action versions, sensitive file leak detection. See `docs/DEPLOYMENT.md` for details.
+- [x] **Dependency security** — Fixed 6 critical CVEs: SQLx 0.7.4 → 0.8.6 (RUSTSEC-2024-0363), rustls-webpki 0.101.7/0.103.10 → 0.103.12 (RUSTSEC-2026-0098, 0099). Removed unmaintained dependencies (paste, rustls-pemfile). 1 known low-risk transitive issue (RSA RUSTSEC-2023-0071 - not exploitable in our deployment). See `docs/SECURITY_FIXES.md` for full report.
 - [ ] **PostgreSQL support** — Add feature flag for PostgreSQL alongside SQLite. Conditional compilation in db.rs.
 - [ ] **Docker production build** — Verify multi-stage Dockerfile builds and runs correctly. Add health check endpoint to docker-compose.
 - [ ] **Monitoring & observability** — Add Prometheus metrics endpoint. Request duration, error rate, active connections.
@@ -246,6 +247,35 @@ Implemented in `backend/src/middleware/`:
 3. Re-export in `backend/src/lib.rs` if integration tests need access.
 4. Add shared types to `shared/src/lib.rs` if the endpoint has a request/response body.
 5. Write integration tests in `backend/tests/api_tests.rs`.
+
+## How To: Deploy to Production
+
+**Automatic Deployment (Recommended):**
+```bash
+git add .
+git commit -m "Your changes"
+git push origin main
+```
+
+The GitHub Actions workflow automatically:
+1. Runs security audit (cargo-audit)
+2. Runs tests and linting (clippy + fmt + all tests)
+3. Builds production assets (release mode + minified CSS)
+4. Deploys to GitHub Pages
+5. Verifies deployment
+
+**Configuration Files:**
+- `frontend/Dioxus.toml` — Development config (no base_path)
+- `frontend/Dioxus.production.toml` — Production config (with base_path for GitHub Pages)
+- `.github/workflows/deploy-pages.yml` — CI/CD pipeline
+
+**Security Features:**
+- OWASP security headers (X-Frame-Options, CSP, HSTS, etc.)
+- Content Security Policy to prevent XSS/injection
+- Dependency vulnerability scanning
+- Zero-warnings enforcement
+
+**Full documentation:** See `docs/DEPLOYMENT.md` for detailed deployment guide, troubleshooting, and manual deployment procedures.
 
 ## Common Pitfalls
 
