@@ -4,7 +4,7 @@
 
 pub mod parser;
 
-pub use parser::{CertificationsConfig, CertLayout, CertEntry, parse_certifications};
+pub use parser::{parse_certifications, CertEntry, CertLayout, CertificationsConfig};
 
 /// The TOML source, embedded at compile time.
 const CERTS_TOML: &str = include_str!("../../content/certifications.toml");

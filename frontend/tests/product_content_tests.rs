@@ -1,6 +1,6 @@
 use frontend::products::{
-    all_parsed_products, all_product_sources, get_parsed_product, list_product_slugs,
-    load_product, parse_product, render_markdown_to_html,
+    all_parsed_products, all_product_sources, get_parsed_product, list_product_slugs, load_product,
+    parse_product, render_markdown_to_html,
 };
 use std::collections::HashSet;
 
@@ -20,7 +20,7 @@ fn test_list_product_slugs_returns_six() {
 #[test]
 fn test_load_product_known_slugs() {
     for slug in list_product_slugs() {
-        assert!(load_product(slug).is_some(), "Missing product: {}", slug);
+        assert!(load_product(slug).is_some(), "Missing product: {slug}");
     }
 }
 
@@ -39,7 +39,11 @@ fn test_parsed_products_have_valid_frontmatter() {
     for (fm, _body) in all_parsed_products() {
         assert!(!fm.id.is_empty(), "Product ID is empty");
         assert!(!fm.name.is_empty(), "Product name is empty for {}", fm.id);
-        assert!(!fm.scientific_name.is_empty(), "Scientific name empty for {}", fm.id);
+        assert!(
+            !fm.scientific_name.is_empty(),
+            "Scientific name empty for {}",
+            fm.id
+        );
         assert!(!fm.category.is_empty(), "Category empty for {}", fm.id);
         assert!(!fm.hs_code.is_empty(), "HS code empty for {}", fm.id);
         assert!(!fm.certs.is_empty(), "No certs for {}", fm.id);
@@ -53,8 +57,16 @@ fn test_parsed_products_have_valid_frontmatter() {
 fn test_parsed_products_have_body_content() {
     for (fm, body) in all_parsed_products() {
         assert!(!body.is_empty(), "Product {} has empty body", fm.id);
-        assert!(body.contains("## Product Overview"), "Product {} missing overview section", fm.id);
-        assert!(body.contains("## Technical Specifications"), "Product {} missing specs section", fm.id);
+        assert!(
+            body.contains("## Product Overview"),
+            "Product {} missing overview section",
+            fm.id
+        );
+        assert!(
+            body.contains("## Technical Specifications"),
+            "Product {} missing specs section",
+            fm.id
+        );
     }
 }
 
@@ -119,6 +131,9 @@ fn test_all_categories_represented() {
         .map(|(fm, _)| fm.category.clone())
         .collect();
     for expected in &["Shrimp", "Cephalopods", "Fish", "Dried"] {
-        assert!(categories.contains(*expected), "Missing category: {}", expected);
+        assert!(
+            categories.contains(*expected),
+            "Missing category: {expected}"
+        );
     }
 }

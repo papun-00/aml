@@ -30,9 +30,18 @@ mod tests {
         vdom.rebuild_in_place();
         let rendered = dioxus::ssr::render(&vdom);
 
-        assert!(rendered.contains("hero-ocean"), "Landing page must have ocean-themed hero section");
-        assert!(rendered.contains("hero-ocean-svg"), "Landing page must have the SVG wave background");
-        assert!(rendered.contains("hero-ocean-content"), "Landing page must have the content layer");
+        assert!(
+            rendered.contains("hero-ocean"),
+            "Landing page must have ocean-themed hero section"
+        );
+        assert!(
+            rendered.contains("hero-ocean-svg"),
+            "Landing page must have the SVG wave background"
+        );
+        assert!(
+            rendered.contains("hero-ocean-content"),
+            "Landing page must have the content layer"
+        );
     }
 
     #[test]
@@ -41,8 +50,17 @@ mod tests {
         vdom.rebuild_in_place();
         let rendered = dioxus::ssr::render(&vdom);
 
-        assert!(rendered.contains("dl"), "Must use descriptive lists for AEO factual representation");
-        assert!(rendered.contains("USA, China"), "Must contain the geographical facts from the original copy");
-        assert!(rendered.contains("hero-ocean-desc"), "Must have the hero description for SEO");
+        assert!(
+            rendered.contains("dl"),
+            "Must use descriptive lists for AEO factual representation"
+        );
+        assert!(
+            rendered.contains("USA, China"),
+            "Must contain the geographical facts from the original copy"
+        );
+        assert!(
+            rendered.contains("hero-ocean-desc"),
+            "Must have the hero description for SEO"
+        );
     }
 }

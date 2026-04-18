@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
-use dioxus::prelude::*;
-use super::{navbar::Navbar, footer::Footer};
+use super::{footer::Footer, navbar::Navbar};
 use crate::Route;
+use dioxus::prelude::*;
 
 #[component]
 pub fn Layout() -> Element {

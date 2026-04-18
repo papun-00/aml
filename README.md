@@ -19,6 +19,8 @@ pnpm install        # Tailwind, concurrently
 pnpm dev            # Starts frontend + backend + Tailwind watcher
 ```
 
+**Before deploying:** Run `pnpm ci:local` to test locally (saves GitHub Actions costs)
+
 **Troubleshooting?** See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common issues and solutions.
 
 ## Architecture Overview
@@ -73,6 +75,21 @@ Test breakdown: 9 backend unit (validation), 10 backend integration (API endpoin
 1. Write tests for new behavior first.
 2. Implement Rust logic.
 3. Verify UI matches Carbon Design tokens.
-4. Run `cargo test --workspace` and `cargo clippy --workspace` before committing.
+4. Run `pnpm ci:quick` before committing (auto-runs via pre-commit hook).
+5. Run `pnpm ci:local` before deploying to production.
 
 For AI agents, see `CLAUDE.md` for development guidance.
+
+## Cost-Optimized CI/CD
+
+**GitHub Actions runs manually only** to save billing costs. All checks run locally:
+
+```bash
+pnpm ci:local   # Full CI pipeline (runs everything GitHub Actions would)
+pnpm ci:quick   # Fast checks (format, lint, test)
+pnpm precommit  # Pre-commit checks (automatic on git commit)
+```
+
+**Deploy to production:** Trigger workflow manually at https://github.com/cyfen-code/alashore-marine-pvt-ltd/actions
+
+See [docs/COST_OPTIMIZATION.md](docs/COST_OPTIMIZATION.md) for details.

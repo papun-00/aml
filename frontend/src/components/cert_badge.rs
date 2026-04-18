@@ -28,7 +28,11 @@ pub fn CertBadge(props: CertBadgeProps) -> Element {
     // Font sizes proportional to stamp size
     let fs_main = (props.size as f32 * 0.30).round() as u16;
     let fs_sub = (props.size as f32 * 0.20).round() as u16;
-    let y_main: u16 = if has_line2 { (props.size as f32 * 0.45).round() as u16 } else { (props.size as f32 * 0.58).round() as u16 };
+    let y_main: u16 = if has_line2 {
+        (props.size as f32 * 0.45).round() as u16
+    } else {
+        (props.size as f32 * 0.58).round() as u16
+    };
     let y_sub: u16 = (props.size as f32 * 0.72).round() as u16;
 
     rsx! {
@@ -83,7 +87,11 @@ pub fn CertStrip() -> Element {
     let layout = &config.layout;
     let certs = &config.certs;
 
-    let dir = if layout.direction == "vertical" { "column" } else { "row" };
+    let dir = if layout.direction == "vertical" {
+        "column"
+    } else {
+        "row"
+    };
     let gap = format!("{}px", layout.gap);
     let wrap = if layout.rows > 1 { "wrap" } else { "nowrap" };
 

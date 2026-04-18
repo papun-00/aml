@@ -1,6 +1,11 @@
 #![allow(non_snake_case)]
+use crate::{
+    components::growth_timeline::GrowthTimeline,
+    config::growth_milestones,
+    seo::{about_seo, PageSeo},
+    Route,
+};
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, about_seo}, config::growth_milestones, components::growth_timeline::GrowthTimeline};
 
 #[component]
 pub fn AboutPage() -> Element {

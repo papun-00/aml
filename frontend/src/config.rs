@@ -65,7 +65,11 @@ pub fn all_products() -> Vec<ProductConfig> {
             scientific_name: fm.scientific_name,
             category: ProductCategory::from_label(&fm.category),
             featured: fm.featured,
-            tag: if fm.tag.is_empty() { None } else { Some(fm.tag) },
+            tag: if fm.tag.is_empty() {
+                None
+            } else {
+                Some(fm.tag)
+            },
             hs_code: fm.hs_code,
             certs: fm.certs,
             markets: fm.markets,
@@ -90,12 +94,36 @@ pub struct StatItem {
 
 pub fn company_stats() -> Vec<StatItem> {
     vec![
-        StatItem { label: "Founded",           value: "2012",      desc: "December 2012, Balasore" },
-        StatItem { label: "Export Markets",     value: "30+",       desc: "Countries worldwide" },
-        StatItem { label: "Workforce",          value: "800+",      desc: "Direct employees" },
-        StatItem { label: "Peak Revenue",       value: "\u{20b9}436 Cr",  desc: "FY2020 turnover" },
-        StatItem { label: "Credit Rating",      value: "A3+",       desc: "CRISIL short-term" },
-        StatItem { label: "LC-Backed Revenue",  value: "95%+",      desc: "Letter of Credit secured" },
+        StatItem {
+            label: "Founded",
+            value: "2012",
+            desc: "December 2012, Balasore",
+        },
+        StatItem {
+            label: "Export Markets",
+            value: "30+",
+            desc: "Countries worldwide",
+        },
+        StatItem {
+            label: "Workforce",
+            value: "800+",
+            desc: "Direct employees",
+        },
+        StatItem {
+            label: "Peak Revenue",
+            value: "\u{20b9}436 Cr",
+            desc: "FY2020 turnover",
+        },
+        StatItem {
+            label: "Credit Rating",
+            value: "A3+",
+            desc: "CRISIL short-term",
+        },
+        StatItem {
+            label: "LC-Backed Revenue",
+            value: "95%+",
+            desc: "Letter of Credit secured",
+        },
     ]
 }
 
@@ -103,7 +131,9 @@ pub fn company_stats() -> Vec<StatItem> {
 // Certifications — derived from frontend/content/certifications.toml
 // ---------------------------------------------------------------------------
 
-pub use crate::certifications::{CertificationsConfig, CertLayout, CertEntry, load_config as load_cert_config};
+pub use crate::certifications::{
+    load_config as load_cert_config, CertEntry, CertLayout, CertificationsConfig,
+};
 
 /// Load the full certifications config (layout + entries) from TOML.
 pub fn cert_config() -> CertificationsConfig {
@@ -132,13 +162,34 @@ pub struct NavItem {
 
 pub fn nav_items() -> Vec<NavItem> {
     vec![
-        NavItem { label: "Home",            route_name: "HomePage" },
-        NavItem { label: "About",           route_name: "AboutPage" },
-        NavItem { label: "Products",        route_name: "ProductsPage" },
-        NavItem { label: "Certifications",  route_name: "CertificationsPage" },
-        NavItem { label: "Sustainability",  route_name: "SustainabilityPage" },
-        NavItem { label: "Contact",         route_name: "ContactPage" },
-        NavItem { label: "Inquiry",         route_name: "InquiryPage" },
+        NavItem {
+            label: "Home",
+            route_name: "HomePage",
+        },
+        NavItem {
+            label: "About",
+            route_name: "AboutPage",
+        },
+        NavItem {
+            label: "Products",
+            route_name: "ProductsPage",
+        },
+        NavItem {
+            label: "Certifications",
+            route_name: "CertificationsPage",
+        },
+        NavItem {
+            label: "Sustainability",
+            route_name: "SustainabilityPage",
+        },
+        NavItem {
+            label: "Contact",
+            route_name: "ContactPage",
+        },
+        NavItem {
+            label: "Inquiry",
+            route_name: "InquiryPage",
+        },
     ]
 }
 
@@ -298,8 +349,5 @@ pub const COMPANY: CompanyInfo = CompanyInfo {
 // ---------------------------------------------------------------------------
 
 pub fn inquiry_products() -> Vec<(String, String)> {
-    all_products()
-        .into_iter()
-        .map(|p| (p.id, p.name))
-        .collect()
+    all_products().into_iter().map(|p| (p.id, p.name)).collect()
 }

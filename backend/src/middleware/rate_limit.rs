@@ -2,15 +2,15 @@
 //! Configured via RATE_LIMIT_REQUESTS_PER_MINUTE env var (default: 60).
 
 use axum::{
-    middleware::Next,
-    http::{Request, StatusCode},
-    response::{Response, IntoResponse},
     body::Body,
+    http::{Request, StatusCode},
+    middleware::Next,
+    response::{IntoResponse, Response},
 };
 use governor::{
-    Quota, RateLimiter,
     clock::DefaultClock,
     state::{InMemoryState, NotKeyed},
+    Quota, RateLimiter,
 };
 use std::num::NonZeroU32;
 use std::sync::Arc;

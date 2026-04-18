@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
-use dioxus::prelude::*;
+use crate::components::icons::{MoonIcon, SunIcon};
 use dioxus::document::eval;
-use crate::components::icons::{SunIcon, MoonIcon};
+use dioxus::prelude::*;
 
 /// Theme toggle using IBM Carbon Design System icons (Light/Asleep).
 #[component]

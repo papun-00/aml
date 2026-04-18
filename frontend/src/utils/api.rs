@@ -31,6 +31,7 @@ pub async fn post_json<Req: Serialize, Res: DeserializeOwned>(
 }
 
 /// Submit an inquiry to the backend.
+#[allow(clippy::too_many_arguments)]
 pub async fn submit_inquiry(
     company: &str,
     name: &str,
@@ -66,6 +67,7 @@ pub async fn submit_inquiry(
 }
 
 /// Subscribe to the newsletter.
+#[allow(dead_code)]
 pub async fn subscribe_newsletter(email: &str, name: &str) -> Result<String, String> {
     let body = serde_json::json!({
         "email": email,

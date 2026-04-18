@@ -15,7 +15,14 @@
     "test:unit": "cargo test --workspace --lib",
     "test:integration": "cargo test --workspace --test '*'",
     "verify": "pnpm run check && pnpm run lint && pnpm run test",
-    "build": "pnpm run build:tailwind && cd frontend && dx build --release"
+    "build": "pnpm run build:tailwind && cd frontend && dx build --release",
+    "ci:local": "bash scripts/ci-local.sh",
+    "ci:security": "cargo audit --deny vulnerability",
+    "ci:format": "cargo fmt --all -- --check",
+    "ci:format:fix": "cargo fmt --all",
+    "ci:quick": "cargo fmt --all -- --check && cargo clippy --workspace -- -D warnings && cargo test --workspace",
+    "precommit": "pnpm run ci:format && pnpm run lint && pnpm run test:unit",
+    "preview:dist": "cd frontend/dist && python3 -m http.server 8080"
   },
   "dependencies": {
     "tailwindcss": "^4.2.2",

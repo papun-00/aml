@@ -1,9 +1,13 @@
 name: Deploy to GitHub Pages (Production)
 
+# COST OPTIMIZATION: Manual trigger only
+# Run all checks locally before deploying to save GitHub Actions billing
+# Use `pnpm ci:local` to run full CI pipeline locally
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  # Removed automatic push trigger to save costs
+  # push:
+  #   branches: [main]
+  workflow_dispatch:  # Manual trigger only via GitHub UI or CLI
 
 # Minimal permissions - principle of least privilege
 permissions:

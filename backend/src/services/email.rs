@@ -27,13 +27,16 @@ pub struct SmtpEmailService {
 impl EmailService for SmtpEmailService {
     async fn send(&self, message: &EmailMessage) -> Result<(), String> {
         use lettre::{
-            Message, SmtpTransport, Transport,
-            message::header::ContentType,
-            transport::smtp::authentication::Credentials,
+            message::header::ContentType, transport::smtp::authentication::Credentials, Message,
+            SmtpTransport, Transport,
         };
 
         let email = Message::builder()
-            .from(self.from.parse().map_err(|e| format!("Invalid from: {e}"))?)
+            .from(
+                self.from
+                    .parse()
+                    .map_err(|e| format!("Invalid from: {e}"))?,
+            )
             .to(message.to.parse().map_err(|e| format!("Invalid to: {e}"))?)
             .subject(&message.subject)
             .header(ContentType::TEXT_PLAIN)
@@ -47,7 +50,9 @@ impl EmailService for SmtpEmailService {
             .credentials(creds)
             .build();
 
-        mailer.send(&email).map_err(|e| format!("SMTP send error: {e}"))?;
+        mailer
+            .send(&email)
+            .map_err(|e| format!("SMTP send error: {e}"))?;
         Ok(())
     }
 }
@@ -67,6 +72,7 @@ impl EmailService for MockEmailService {
 }
 
 /// Build inquiry notification email body.
+#[allow(clippy::too_many_arguments)]
 pub fn build_inquiry_email(
     notify_to: &str,
     inquiry_id: &str,
@@ -140,8 +146,15 @@ mod tests {
     #[test]
     fn test_build_inquiry_email_no_volume() {
         let email = build_inquiry_email(
-            "test@test.com", "id", "Co", "Name", "e@e.com", "UK",
-            &[], None, "",
+            "test@test.com",
+            "id",
+            "Co",
+            "Name",
+            "e@e.com",
+            "UK",
+            &[],
+            None,
+            "",
         );
         assert!(email.body.contains("Not specified"));
         assert!(email.body.contains("None specified"));

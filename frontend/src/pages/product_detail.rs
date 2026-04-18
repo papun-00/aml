@@ -1,7 +1,10 @@
 #![allow(non_snake_case)]
+use crate::products::{all_parsed_products, get_parsed_product, render_markdown_to_html};
+use crate::{
+    seo::{product_seo, PageSeo},
+    Route,
+};
 use dioxus::prelude::*;
-use crate::products::{get_parsed_product, render_markdown_to_html, all_parsed_products};
-use crate::{Route, seo::{PageSeo, product_seo}};
 
 #[component]
 pub fn ProductDetailPage(id: String) -> Element {

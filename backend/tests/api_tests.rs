@@ -1,18 +1,20 @@
 use axum::http::{Request, StatusCode};
-use axum::{Router, Extension};
+use axum::{Extension, Router};
 use http_body_util::BodyExt;
 use serde_json::Value;
-use tower::ServiceExt;
 use std::sync::Arc;
+use tower::ServiceExt;
 
 use backend::db;
+use backend::middleware::rate_limit;
 use backend::routes;
 use backend::services::email::{EmailService, MockEmailService};
-use backend::middleware::rate_limit;
 
 /// Build a test app with in-memory SQLite, mock email, and generous rate limit.
 async fn test_app() -> Router {
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let email_svc: Arc<dyn EmailService> = Arc::new(MockEmailService::default());
     let limiter = rate_limit::create_limiter(10_000); // generous for tests
     Router::new()
@@ -23,7 +25,9 @@ async fn test_app() -> Router {
 
 /// Build a test app returning both Router and a handle to the mock email service.
 async fn test_app_with_email() -> (Router, Arc<MockEmailService>) {
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let mock = Arc::new(MockEmailService::default());
     let email_svc: Arc<dyn EmailService> = mock.clone();
     let limiter = rate_limit::create_limiter(10_000);
@@ -91,7 +95,11 @@ async fn list_products_returns_all_six() {
     assert_eq!(json["success"], true);
 
     let products = json["data"].as_array().expect("data should be an array");
-    assert_eq!(products.len(), 6, "catalog should contain exactly 6 products");
+    assert_eq!(
+        products.len(),
+        6,
+        "catalog should contain exactly 6 products"
+    );
 
     // Verify each product has the required fields
     for p in products {
@@ -143,7 +151,10 @@ async fn get_product_nonexistent_returns_null_data() {
     // The handler wraps the result in ApiResponse::ok(None), so success is true but data is null
     assert_eq!(status, StatusCode::OK);
     assert_eq!(json["success"], true);
-    assert!(json["data"].is_null(), "data should be null for unknown product");
+    assert!(
+        json["data"].is_null(),
+        "data should be null for unknown product"
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -152,7 +163,9 @@ async fn get_product_nonexistent_returns_null_data() {
 
 #[tokio::test]
 async fn audit_log_table_exists() {
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM audit_log")
         .fetch_one(&pool)
         .await
@@ -172,7 +185,9 @@ async fn get_audit_log_returns_empty_initially() {
 
 #[tokio::test]
 async fn inquiry_creates_audit_log_entry() {
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let email_svc: Arc<dyn EmailService> = Arc::new(MockEmailService::default());
     let limiter = rate_limit::create_limiter(10_000);
     let make_app = || {
@@ -200,7 +215,10 @@ async fn inquiry_creates_audit_log_entry() {
         .fetch_one(&pool)
         .await
         .unwrap();
-    assert!(count.0 >= 1, "audit log should have at least 1 entry after inquiry");
+    assert!(
+        count.0 >= 1,
+        "audit log should have at least 1 entry after inquiry"
+    );
 
     // Check via API
     let (status2, json) = get_json(make_app(), "/api/v1/admin/audit").await;
@@ -218,7 +236,9 @@ async fn inquiry_creates_audit_log_entry() {
 
 #[tokio::test]
 async fn rate_limit_returns_429_when_exceeded() {
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let email_svc: Arc<dyn EmailService> = Arc::new(MockEmailService::default());
     // Allow only 1 request per minute
     let limiter = rate_limit::create_limiter(1);
@@ -254,7 +274,9 @@ async fn rate_limit_returns_429_when_exceeded() {
 #[tokio::test]
 async fn products_are_seeded_in_database() {
     // Verify products come from DB by querying the pool directly
-    let pool = db::init_pool("sqlite::memory:").await.expect("in-memory db");
+    let pool = db::init_pool("sqlite::memory:")
+        .await
+        .expect("in-memory db");
     let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM products")
         .fetch_one(&pool)
         .await
@@ -271,14 +293,21 @@ async fn product_from_db_has_specifications_and_markets() {
     assert_eq!(json["data"]["id"], "squid");
 
     // Verify nested JSON fields stored/retrieved correctly
-    let specs = json["data"]["specifications"].as_array().expect("specs array");
+    let specs = json["data"]["specifications"]
+        .as_array()
+        .expect("specs array");
     assert!(!specs.is_empty(), "squid should have specs");
 
     let markets = json["data"]["markets"].as_array().expect("markets array");
     assert!(markets.len() >= 3, "squid should have 3+ markets");
 
-    let certs = json["data"]["certifications"].as_array().expect("certs array");
-    assert!(certs.iter().any(|c| c == "HACCP"), "squid should have HACCP cert");
+    let certs = json["data"]["certifications"]
+        .as_array()
+        .expect("certs array");
+    assert!(
+        certs.iter().any(|c| c == "HACCP"),
+        "squid should have HACCP cert"
+    );
 }
 
 #[tokio::test]
@@ -290,7 +319,10 @@ async fn product_db_returns_correct_types() {
     assert_eq!(product["category"], "dried");
     assert_eq!(product["featured"], false);
     assert_eq!(product["min_order_kg"], 2000);
-    assert!(product["scientific_name"].is_null(), "dried shrimp has no scientific name");
+    assert!(
+        product["scientific_name"].is_null(),
+        "dried shrimp has no scientific name"
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -351,8 +383,14 @@ async fn submit_inquiry_sends_notification_email() {
 
     let sent = mock.sent.lock().unwrap();
     assert_eq!(sent.len(), 1, "one notification email should be sent");
-    assert!(sent[0].subject.contains("Test Corp"), "subject should contain company name");
-    assert!(sent[0].body.contains("squid"), "body should mention products");
+    assert!(
+        sent[0].subject.contains("Test Corp"),
+        "subject should contain company name"
+    );
+    assert!(
+        sent[0].body.contains("squid"),
+        "body should mention products"
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -490,10 +528,11 @@ async fn newsletter_duplicate_email_is_idempotent() {
     assert_eq!(j2["success"], true);
 
     // Verify only one row exists
-    let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM newsletter_subscribers WHERE email = ?")
-        .bind("dupe@example.com")
-        .fetch_one(&pool)
-        .await
-        .unwrap();
+    let count: (i64,) =
+        sqlx::query_as("SELECT COUNT(*) FROM newsletter_subscribers WHERE email = ?")
+            .bind("dupe@example.com")
+            .fetch_one(&pool)
+            .await
+            .unwrap();
     assert_eq!(count.0, 1, "duplicate email should result in only one row");
 }

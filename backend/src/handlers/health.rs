@@ -1,6 +1,6 @@
 use axum::Json;
-use shared::ApiResponse;
 use serde_json::Value;
+use shared::ApiResponse;
 
 pub async fn health_check() -> Json<ApiResponse<Value>> {
     Json(ApiResponse::ok(serde_json::json!({

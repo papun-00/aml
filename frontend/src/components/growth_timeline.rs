@@ -6,8 +6,8 @@
 //! Rotating word animation in the heading. IBM Carbon 32px icons.
 //! Config-driven, all card styling inline, section uses CSS classes for uniformity.
 
-use dioxus::prelude::*;
 use crate::config::GrowthMilestone;
+use dioxus::prelude::*;
 
 // ── Accent colors for card variety ────────────────────────────────────────
 const ACCENT_BLUE: &str = "#0f62fe";
@@ -27,13 +27,21 @@ fn carbon_icon(icon: &str) -> &'static str {
 }
 
 fn accent_for(i: usize, highlight: bool) -> &'static str {
-    if highlight { return ACCENT_PURPLE; }
-    match i % 3 { 0 => ACCENT_BLUE, 1 => ACCENT_TEAL, _ => ACCENT_PURPLE }
+    if highlight {
+        return ACCENT_PURPLE;
+    }
+    match i % 3 {
+        0 => ACCENT_BLUE,
+        1 => ACCENT_TEAL,
+        _ => ACCENT_PURPLE,
+    }
 }
 
 /// CSS class suffix for card gradient variant — applied via `.jcard-v{n}`.
 fn card_variant_class(i: usize, highlight: bool) -> &'static str {
-    if highlight { return "jcard-highlight"; }
+    if highlight {
+        return "jcard-highlight";
+    }
     match i % 4 {
         0 => "jcard-v0",
         1 => "jcard-v1",
@@ -53,7 +61,11 @@ pub struct GrowthTimelineProps {
 
 /// Node position on the ascending curve. Shallow ~15° incline.
 fn node_pos(i: usize, count: usize) -> (f64, f64) {
-    let t = if count <= 1 { 0.5 } else { i as f64 / (count as f64 - 1.0) };
+    let t = if count <= 1 {
+        0.5
+    } else {
+        i as f64 / (count as f64 - 1.0)
+    };
     let x = 60.0 + t * 880.0;
     let y = 320.0 - t * 130.0; // 320..190 — gentle rise with more room above
     (x, y)

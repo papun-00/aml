@@ -1,3 +1,6 @@
 pub mod api;
 
-pub fn canonical(path: &str) -> String { format!("https://alashoremarine.com{path}") }
+#[allow(dead_code)]
+pub fn canonical(path: &str) -> String {
+    format!("https://alashoremarine.com{path}")
+}

@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
-use dioxus::prelude::*;
 use crate::Route;
+use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct InquiryCtaProps {

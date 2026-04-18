@@ -1,9 +1,18 @@
 #![allow(non_snake_case)]
+use crate::{
+    config::inquiry_products,
+    seo::{inquiry_seo, PageSeo},
+    utils::api,
+    Route,
+};
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, inquiry_seo}, config::inquiry_products, utils::api};
 
 #[derive(Clone, PartialEq)]
-enum Step { Contact, Products, Submit }
+enum Step {
+    Contact,
+    Products,
+    Submit,
+}
 
 #[derive(Clone, Default)]
 struct FormState {

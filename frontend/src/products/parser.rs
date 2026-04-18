@@ -1,7 +1,7 @@
 //! TOML frontmatter parser for product markdown files.
 
+use pulldown_cmark::{html, Options, Parser};
 use serde::Deserialize;
-use pulldown_cmark::{Parser, Options, html};
 
 /// Structured product metadata from markdown frontmatter.
 #[derive(Debug, Clone, PartialEq, Deserialize)]

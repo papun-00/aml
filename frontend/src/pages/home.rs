@@ -2,18 +2,16 @@
 //! Home page — optimised for zero-markup snippets and GenAI answer extraction.
 //! Strategy: fact-dense opening paragraph, Q&A sections, entity-rich headings.
 
-use dioxus::prelude::*;
 use crate::{
-    Route,
-    seo::{PageSeo, home_seo},
-    config::{all_products, company_stats, faqs},
     components::{
-        product_card::ProductCard,
+        cert_badge::CertStrip, inquiry_cta::InquiryCta, product_card::ProductCard,
         stat_counter::StatCounter,
-        cert_badge::CertStrip,
-        inquiry_cta::InquiryCta,
     },
+    config::{all_products, company_stats, faqs},
+    seo::{home_seo, PageSeo},
+    Route,
 };
+use dioxus::prelude::*;
 
 #[component]
 pub fn HomePage() -> Element {

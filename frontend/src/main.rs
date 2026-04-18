@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
 
-mod components;
 pub mod certifications;
+mod components;
 pub mod config;
 mod pages;
 pub mod products;
@@ -11,15 +11,15 @@ mod utils;
 use dioxus::prelude::*;
 
 // Re-export page components so the Routable derive macro can find them
-use pages::home::HomePage;
 use pages::about::AboutPage;
-use pages::products::ProductsPage;
-use pages::product_detail::ProductDetailPage;
 use pages::certifications::CertificationsPage;
-use pages::sustainability::SustainabilityPage;
 use pages::contact::ContactPage;
+use pages::home::HomePage;
 use pages::inquiry::InquiryPage;
 use pages::not_found::NotFoundPage;
+use pages::product_detail::ProductDetailPage;
+use pages::products::ProductsPage;
+use pages::sustainability::SustainabilityPage;
 
 fn main() {
     console_error_panic_hook::set_once();

@@ -1,6 +1,9 @@
-use axum::{Json, extract::{Path, State}};
-use sqlx::SqlitePool;
+use axum::{
+    extract::{Path, State},
+    Json,
+};
 use shared::{ApiResponse, Product, ProductCategory, ProductSpec};
+use sqlx::SqlitePool;
 
 /// Row from the products table — JSON columns stored as TEXT.
 #[derive(sqlx::FromRow)]
@@ -33,8 +36,7 @@ impl ProductRow {
             serde_json::from_str(&self.specifications).unwrap_or_default();
         let certifications: Vec<String> =
             serde_json::from_str(&self.certifications).unwrap_or_default();
-        let markets: Vec<String> =
-            serde_json::from_str(&self.markets).unwrap_or_default();
+        let markets: Vec<String> = serde_json::from_str(&self.markets).unwrap_or_default();
 
         Product {
             id: self.id,
@@ -53,13 +55,11 @@ impl ProductRow {
     }
 }
 
-pub async fn list_products(
-    State(pool): State<SqlitePool>,
-) -> Json<ApiResponse<Vec<Product>>> {
+pub async fn list_products(State(pool): State<SqlitePool>) -> Json<ApiResponse<Vec<Product>>> {
     let rows = sqlx::query_as::<_, ProductRow>(
         "SELECT id, name, scientific_name, category, tagline, description,
                 specifications, certifications, markets, min_order_kg, hs_code, featured
-         FROM products ORDER BY sort_order ASC"
+         FROM products ORDER BY sort_order ASC",
     )
     .fetch_all(&pool)
     .await;
@@ -83,7 +83,7 @@ pub async fn get_product(
     let row = sqlx::query_as::<_, ProductRow>(
         "SELECT id, name, scientific_name, category, tagline, description,
                 specifications, certifications, markets, min_order_kg, hs_code, featured
-         FROM products WHERE id = ?"
+         FROM products WHERE id = ?",
     )
     .bind(&id)
     .fetch_optional(&pool)

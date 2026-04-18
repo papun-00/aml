@@ -1,6 +1,9 @@
 #![allow(non_snake_case)]
+use crate::{
+    seo::{contact_seo, PageSeo},
+    Route,
+};
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, contact_seo}};
 
 #[component]
 pub fn ContactPage() -> Element {

@@ -1,11 +1,20 @@
 #![allow(non_snake_case)]
-use dioxus::prelude::*;
-use crate::config::{all_products, ProductCategory};
 use crate::components::product_card::ProductCard;
-use crate::{Route, seo::{PageSeo, products_seo}};
+use crate::config::{all_products, ProductCategory};
+use crate::{
+    seo::{products_seo, PageSeo},
+    Route,
+};
+use dioxus::prelude::*;
 
 #[derive(Clone, PartialEq)]
-enum Filter { All, Shrimp, Fish, Cephalopods, Dried }
+enum Filter {
+    All,
+    Shrimp,
+    Fish,
+    Cephalopods,
+    Dried,
+}
 
 impl Filter {
     fn matches(&self, category: &ProductCategory) -> bool {
@@ -29,7 +38,13 @@ impl Filter {
     }
 }
 
-const FILTERS: &[Filter] = &[Filter::All, Filter::Shrimp, Filter::Fish, Filter::Cephalopods, Filter::Dried];
+const FILTERS: &[Filter] = &[
+    Filter::All,
+    Filter::Shrimp,
+    Filter::Fish,
+    Filter::Cephalopods,
+    Filter::Dried,
+];
 
 #[component]
 pub fn ProductsPage() -> Element {

@@ -13,7 +13,10 @@ pub const MAX_PRODUCT_IDS: usize = 20;
 
 /// Basic email regex — RFC 5322 simplified.
 static EMAIL_RE: LazyLock<regex::Regex> = LazyLock::new(|| {
-    regex::Regex::new(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$").unwrap()
+    regex::Regex::new(
+        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$",
+    )
+    .unwrap()
 });
 
 pub fn is_valid_email(email: &str) -> bool {
@@ -113,7 +116,10 @@ mod tests {
 
     #[test]
     fn test_sanitize_strips_html() {
-        assert_eq!(sanitize("<script>alert('xss')</script>"), "&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;");
+        assert_eq!(
+            sanitize("<script>alert('xss')</script>"),
+            "&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;"
+        );
         assert_eq!(sanitize("Hello \"World\""), "Hello &quot;World&quot;");
     }
 

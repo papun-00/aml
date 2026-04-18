@@ -1,9 +1,9 @@
-pub mod home;
 pub mod about;
-pub mod products;
-pub mod product_detail;
 pub mod certifications;
-pub mod sustainability;
 pub mod contact;
+pub mod home;
 pub mod inquiry;
 pub mod not_found;
+pub mod product_detail;
+pub mod products;
+pub mod sustainability;

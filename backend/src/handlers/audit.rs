@@ -1,7 +1,7 @@
-use axum::{Json, extract::State};
-use sqlx::SqlitePool;
+use axum::{extract::State, Json};
 use serde::Serialize;
 use shared::ApiResponse;
+use sqlx::SqlitePool;
 
 #[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct AuditEntry {
@@ -14,12 +14,10 @@ pub struct AuditEntry {
     pub user_agent: String,
 }
 
-pub async fn list_audit_log(
-    State(pool): State<SqlitePool>,
-) -> Json<ApiResponse<Vec<AuditEntry>>> {
+pub async fn list_audit_log(State(pool): State<SqlitePool>) -> Json<ApiResponse<Vec<AuditEntry>>> {
     let entries = sqlx::query_as::<_, AuditEntry>(
         "SELECT id, timestamp, method, endpoint, status_code, ip, user_agent
-         FROM audit_log ORDER BY timestamp DESC LIMIT 100"
+         FROM audit_log ORDER BY timestamp DESC LIMIT 100",
     )
     .fetch_all(&pool)
     .await;
@@ -34,15 +32,10 @@ pub async fn list_audit_log(
 }
 
 /// Insert an audit log entry. Called from the inquiry/newsletter handlers after processing.
-pub async fn log_request(
-    pool: &SqlitePool,
-    method: &str,
-    endpoint: &str,
-    status_code: u16,
-) {
+pub async fn log_request(pool: &SqlitePool, method: &str, endpoint: &str, status_code: u16) {
     let now = chrono::Utc::now().to_rfc3339();
     if let Err(e) = sqlx::query(
-        "INSERT INTO audit_log (timestamp, method, endpoint, status_code) VALUES (?, ?, ?, ?)"
+        "INSERT INTO audit_log (timestamp, method, endpoint, status_code) VALUES (?, ?, ?, ?)",
     )
     .bind(&now)
     .bind(method)

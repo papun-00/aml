@@ -1,10 +1,13 @@
-use axum::{Router, routing::{get, post}};
+use axum::{
+    routing::{get, post},
+    Router,
+};
 use sqlx::SqlitePool;
 
 pub mod health;
 pub mod inquiry;
-pub mod products;
 pub mod newsletter;
+pub mod products;
 
 use crate::handlers;
 

@@ -1,6 +1,9 @@
 #![allow(non_snake_case)]
+use crate::{
+    seo::{certifications_seo, PageSeo},
+    Route,
+};
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, certifications_seo}};
 
 #[component]
 pub fn CertificationsPage() -> Element {

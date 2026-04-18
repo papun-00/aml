@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
-use dioxus::prelude::*;
-use crate::Route;
 use super::theme_toggle::ThemeToggle;
+use crate::Route;
+use dioxus::prelude::*;
 
 #[component]
 pub fn Navbar() -> Element {

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# ═══════════════════════════════════════════════════════════════════════
+# Pre-commit Hook — Alashore Marine Exports
+# Runs basic checks before allowing commit
+# Prevents pushing broken code and saves GitHub Actions billing
+# ═══════════════════════════════════════════════════════════════════════
+
+set -e
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+echo ""
+echo -e "${CYAN}🔍 Running pre-commit checks...${NC}"
+echo ""
+
+# Check 1: Code formatting
+echo -e "${CYAN}1/3 Checking code formatting...${NC}"
+if cargo fmt --all -- --check; then
+    echo -e "${GREEN}✅ Code formatting OK${NC}"
+else
+    echo -e "${RED}❌ Code formatting failed!${NC}"
+    echo -e "${YELLOW}Run: ${CYAN}pnpm run ci:format:fix${YELLOW} to fix${NC}"
+    exit 1
+fi
+
+# Check 2: Clippy linting
+echo -e "${CYAN}2/3 Running Clippy...${NC}"
+if cargo clippy --workspace --all-targets --quiet -- -D warnings 2>&1 | grep -q "error\|warning"; then
+    echo -e "${RED}❌ Clippy found issues!${NC}"
+    echo -e "${YELLOW}Run: ${CYAN}cargo clippy --workspace${YELLOW} to see details${NC}"
+    exit 1
+else
+    echo -e "${GREEN}✅ Clippy OK${NC}"
+fi
+
+# Check 3: Unit tests
+echo -e "${CYAN}3/3 Running unit tests...${NC}"
+if cargo test --workspace --lib --quiet; then
+    echo -e "${GREEN}✅ Unit tests passed${NC}"
+else
+    echo -e "${RED}❌ Unit tests failed!${NC}"
+    exit 1
+fi
+
+echo ""
+echo -e "${GREEN}✅ All pre-commit checks passed!${NC}"
+echo -e "${YELLOW}💡 Run ${CYAN}pnpm ci:local${YELLOW} before deploying to GitHub${NC}"
+echo ""
+
+exit 0

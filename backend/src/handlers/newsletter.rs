@@ -1,8 +1,8 @@
-use axum::{Json, extract::State};
-use sqlx::SqlitePool;
-use shared::{ApiResponse, NewsletterRequest};
+use crate::middleware::validate::{sanitize, truncate, validate_newsletter, MAX_NAME_LEN};
+use axum::{extract::State, Json};
 use chrono::Utc;
-use crate::middleware::validate::{validate_newsletter, sanitize, truncate, MAX_NAME_LEN};
+use shared::{ApiResponse, NewsletterRequest};
+use sqlx::SqlitePool;
 
 pub async fn subscribe(
     State(pool): State<SqlitePool>,
@@ -13,9 +13,9 @@ pub async fn subscribe(
         return Json(ApiResponse::err(msg));
     }
 
-    let now   = Utc::now().to_rfc3339();
+    let now = Utc::now().to_rfc3339();
     let email = req.email.trim().to_lowercase();
-    let name  = sanitize(&truncate(&req.name.unwrap_or_default(), MAX_NAME_LEN));
+    let name = sanitize(&truncate(&req.name.unwrap_or_default(), MAX_NAME_LEN));
 
     let result = sqlx::query(
         "INSERT OR IGNORE INTO newsletter_subscribers (email, name, subscribed_at) VALUES (?, ?, ?)"
@@ -27,7 +27,10 @@ pub async fn subscribe(
     .await;
 
     match result {
-        Ok(_)  => Json(ApiResponse::ok("Subscribed".to_string())),
-        Err(e) => { tracing::error!("Newsletter error: {e}"); Json(ApiResponse::err("Failed")) }
+        Ok(_) => Json(ApiResponse::ok("Subscribed".to_string())),
+        Err(e) => {
+            tracing::error!("Newsletter error: {e}");
+            Json(ApiResponse::err("Failed"))
+        }
     }
 }

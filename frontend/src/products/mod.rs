@@ -4,11 +4,12 @@
 
 mod parser;
 
-pub use parser::{ProductFrontmatter, parse_product, render_markdown_to_html};
+pub use parser::{parse_product, render_markdown_to_html, ProductFrontmatter};
 
 // Compile-time embedded product markdown
 const PRODUCT_VANNAMEI_SHRIMP: &str = include_str!("../../content/products/vannamei-shrimp.md");
-const PRODUCT_BLACK_TIGER_SHRIMP: &str = include_str!("../../content/products/black-tiger-shrimp.md");
+const PRODUCT_BLACK_TIGER_SHRIMP: &str =
+    include_str!("../../content/products/black-tiger-shrimp.md");
 const PRODUCT_SQUID: &str = include_str!("../../content/products/squid.md");
 const PRODUCT_CUTTLEFISH: &str = include_str!("../../content/products/cuttlefish.md");
 const PRODUCT_PINK_PERCH: &str = include_str!("../../content/products/pink-perch.md");

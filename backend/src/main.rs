@@ -1,24 +1,24 @@
 mod config;
-mod routes;
-mod handlers;
-mod models;
 mod db;
+mod handlers;
 pub mod middleware;
+mod models;
+mod routes;
 pub mod services;
 
-use axum::{Router, middleware as axum_mw, Extension};
-use tower_http::{
-    cors::{CorsLayer, AllowOrigin},
-    compression::CompressionLayer,
-    trace::TraceLayer,
-    limit::RequestBodyLimitLayer,
-};
 use axum::http::{HeaderValue, Method};
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use axum::{middleware as axum_mw, Extension, Router};
+use middleware::rate_limit;
+use services::email::{EmailService, SmtpEmailService};
 use std::net::SocketAddr;
 use std::sync::Arc;
-use services::email::{EmailService, SmtpEmailService};
-use middleware::rate_limit;
+use tower_http::{
+    compression::CompressionLayer,
+    cors::{AllowOrigin, CorsLayer},
+    limit::RequestBodyLimitLayer,
+    trace::TraceLayer,
+};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -73,7 +73,9 @@ async fn main() -> anyhow::Result<()> {
         .layer(axum_mw::from_fn(rate_limit::rate_limit))
         .layer(Extension(limiter))
         // Security headers on every response (OWASP)
-        .layer(axum_mw::from_fn(middleware::security_headers::security_headers))
+        .layer(axum_mw::from_fn(
+            middleware::security_headers::security_headers,
+        ))
         // Limit request body to 1 MB (OWASP: Denial of Service prevention)
         .layer(RequestBodyLimitLayer::new(1024 * 1024))
         .layer(cors)

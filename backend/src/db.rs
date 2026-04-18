@@ -1,8 +1,9 @@
-use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
+use sqlx::{sqlite::SqlitePoolOptions, SqlitePool};
 
 pub async fn init_pool(database_url: &str) -> anyhow::Result<SqlitePool> {
     // Ensure data dir exists for sqlite file path
-    let db_path = database_url.strip_prefix("sqlite://")
+    let db_path = database_url
+        .strip_prefix("sqlite://")
         .or_else(|| database_url.strip_prefix("sqlite:"));
     if let Some(path) = db_path {
         let path = path.split('?').next().unwrap_or(path);
@@ -32,8 +33,10 @@ pub async fn init_pool(database_url: &str) -> anyhow::Result<SqlitePool> {
             message      TEXT NOT NULL,
             status       TEXT NOT NULL DEFAULT 'new',
             created_at   TEXT NOT NULL
-        )"
-    ).execute(&pool).await?;
+        )",
+    )
+    .execute(&pool)
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS newsletter_subscribers (
@@ -41,8 +44,10 @@ pub async fn init_pool(database_url: &str) -> anyhow::Result<SqlitePool> {
             name          TEXT NOT NULL DEFAULT '',
             subscribed_at TEXT NOT NULL,
             active        INTEGER NOT NULL DEFAULT 1
-        )"
-    ).execute(&pool).await?;
+        )",
+    )
+    .execute(&pool)
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS products (
@@ -59,8 +64,10 @@ pub async fn init_pool(database_url: &str) -> anyhow::Result<SqlitePool> {
             hs_code         TEXT NOT NULL,
             featured        INTEGER NOT NULL DEFAULT 0,
             sort_order      INTEGER NOT NULL DEFAULT 0
-        )"
-    ).execute(&pool).await?;
+        )",
+    )
+    .execute(&pool)
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS audit_log (
@@ -71,20 +78,25 @@ pub async fn init_pool(database_url: &str) -> anyhow::Result<SqlitePool> {
             status_code INTEGER NOT NULL,
             ip          TEXT NOT NULL DEFAULT '',
             user_agent  TEXT NOT NULL DEFAULT ''
-        )"
-    ).execute(&pool).await?;
+        )",
+    )
+    .execute(&pool)
+    .await?;
 
-    sqlx::query(
-        "CREATE INDEX IF NOT EXISTS idx_inquiries_created ON inquiries(created_at DESC)"
-    ).execute(&pool).await.ok();
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_inquiries_created ON inquiries(created_at DESC)")
+        .execute(&pool)
+        .await
+        .ok();
 
-    sqlx::query(
-        "CREATE INDEX IF NOT EXISTS idx_audit_log_ts ON audit_log(timestamp DESC)"
-    ).execute(&pool).await.ok();
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_audit_log_ts ON audit_log(timestamp DESC)")
+        .execute(&pool)
+        .await
+        .ok();
 
-    sqlx::query(
-        "CREATE INDEX IF NOT EXISTS idx_products_sort ON products(sort_order ASC)"
-    ).execute(&pool).await.ok();
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_products_sort ON products(sort_order ASC)")
+        .execute(&pool)
+        .await
+        .ok();
 
     // Seed products if table is empty
     let count: (i64,) = sqlx::query_as("SELECT COUNT(*) FROM products")
@@ -105,19 +117,19 @@ async fn seed_products(pool: &SqlitePool) -> anyhow::Result<()> {
         sqlx::query(
             "INSERT INTO products (id, name, scientific_name, category, tagline, description,
              specifications, certifications, markets, min_order_kg, hs_code, featured, sort_order)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         )
-        .bind(&p.id)
-        .bind(&p.name)
-        .bind(&p.scientific_name)
-        .bind(&p.category)
-        .bind(&p.tagline)
-        .bind(&p.description)
+        .bind(p.id)
+        .bind(p.name)
+        .bind(p.scientific_name)
+        .bind(p.category)
+        .bind(p.tagline)
+        .bind(p.description)
         .bind(&p.specifications)
         .bind(&p.certifications)
         .bind(&p.markets)
         .bind(p.min_order_kg)
-        .bind(&p.hs_code)
+        .bind(p.hs_code)
         .bind(p.featured)
         .bind(i as i32)
         .execute(pool)

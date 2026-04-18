@@ -1,12 +1,14 @@
-use axum::{Json, extract::State, Extension};
-use sqlx::SqlitePool;
-use shared::{ApiResponse, InquiryRequest};
-use uuid::Uuid;
-use chrono::Utc;
-use std::sync::Arc;
-use crate::middleware::validate::{validate_inquiry, sanitize, truncate, MAX_MESSAGE_LEN, MAX_PHONE_LEN};
-use crate::services::email::{EmailService, build_inquiry_email};
 use crate::handlers::audit;
+use crate::middleware::validate::{
+    sanitize, truncate, validate_inquiry, MAX_MESSAGE_LEN, MAX_PHONE_LEN,
+};
+use crate::services::email::{build_inquiry_email, EmailService};
+use axum::{extract::State, Extension, Json};
+use chrono::Utc;
+use shared::{ApiResponse, InquiryRequest};
+use sqlx::SqlitePool;
+use std::sync::Arc;
+use uuid::Uuid;
 
 pub async fn submit_inquiry(
     State(pool): State<SqlitePool>,
@@ -26,8 +28,8 @@ pub async fn submit_inquiry(
     }
 
     // Sanitize all user-supplied text (OWASP: Output Encoding / Stored XSS prevention)
-    let id   = Uuid::new_v4().to_string();
-    let now  = Utc::now().to_rfc3339();
+    let id = Uuid::new_v4().to_string();
+    let now = Utc::now().to_rfc3339();
     let company = sanitize(&req.company_name);
     let name = sanitize(&req.contact_name);
     let email = req.email.trim().to_lowercase();
@@ -41,7 +43,7 @@ pub async fn submit_inquiry(
         "INSERT INTO inquiries
          (id, company_name, contact_name, email, phone, country,
           product_ids, volume_mt, message, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     )
     .bind(&id)
     .bind(&company)
@@ -67,8 +69,15 @@ pub async fn submit_inquiry(
             let notify_email = std::env::var("NOTIFY_EMAIL")
                 .unwrap_or_else(|_| "export@alashoremarine.com".into());
             let email_msg = build_inquiry_email(
-                &notify_email, &id, &company, &name, &email,
-                &country, &req.product_ids, volume, &message,
+                &notify_email,
+                &id,
+                &company,
+                &name,
+                &email,
+                &country,
+                &req.product_ids,
+                volume,
+                &message,
             );
             let svc = email_svc.clone();
             tokio::spawn(async move {

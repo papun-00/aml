@@ -28,7 +28,11 @@ fn test_growth_milestones_have_required_fields() {
     for m in growth_milestones() {
         assert!(m.year >= 2012, "Year {} is before founding", m.year);
         assert!(!m.title.is_empty(), "Milestone {} has empty title", m.year);
-        assert!(!m.description.is_empty(), "Milestone {} has empty description", m.year);
+        assert!(
+            !m.description.is_empty(),
+            "Milestone {} has empty description",
+            m.year
+        );
         assert!(!m.icon.is_empty(), "Milestone {} has empty icon", m.year);
     }
 }
@@ -37,12 +41,19 @@ fn test_growth_milestones_have_required_fields() {
 fn test_growth_milestones_years_are_unique() {
     let milestones = growth_milestones();
     let years: HashSet<u16> = milestones.iter().map(|m| m.year).collect();
-    assert_eq!(years.len(), milestones.len(), "Duplicate milestone years found");
+    assert_eq!(
+        years.len(),
+        milestones.len(),
+        "Duplicate milestone years found"
+    );
 }
 
 #[test]
 fn test_growth_milestones_has_one_highlight() {
-    let highlights: Vec<_> = growth_milestones().into_iter().filter(|m| m.highlight).collect();
+    let highlights: Vec<_> = growth_milestones()
+        .into_iter()
+        .filter(|m| m.highlight)
+        .collect();
     assert!(
         !highlights.is_empty(),
         "At least one milestone should be highlighted"
@@ -51,7 +62,14 @@ fn test_growth_milestones_has_one_highlight() {
 
 #[test]
 fn test_growth_milestones_icons_are_valid() {
-    let valid_icons = ["anchor", "globe", "star", "shield", "refresh", "trending-up"];
+    let valid_icons = [
+        "anchor",
+        "globe",
+        "star",
+        "shield",
+        "refresh",
+        "trending-up",
+    ];
     for m in growth_milestones() {
         assert!(
             valid_icons.contains(&m.icon),
@@ -77,7 +95,11 @@ fn test_product_ids_are_unique() {
 #[test]
 fn test_all_products_have_certs() {
     for p in all_products() {
-        assert!(!p.certs.is_empty(), "Product '{}' has no certifications", p.name);
+        assert!(
+            !p.certs.is_empty(),
+            "Product '{}' has no certifications",
+            p.name
+        );
     }
 }
 
@@ -91,7 +113,11 @@ fn test_all_products_have_markets() {
 #[test]
 fn test_all_products_have_min_order() {
     for p in all_products() {
-        assert!(!p.min_order.is_empty(), "Product '{}' has no min_order", p.name);
+        assert!(
+            !p.min_order.is_empty(),
+            "Product '{}' has no min_order",
+            p.name
+        );
     }
 }
 
@@ -109,7 +135,11 @@ fn test_certifications_returns_five() {
 fn test_certifications_have_unique_names() {
     let certs = certifications();
     let names: HashSet<String> = certs.iter().map(|c| c.name.clone()).collect();
-    assert_eq!(names.len(), certs.len(), "Certification names must be unique");
+    assert_eq!(
+        names.len(),
+        certs.len(),
+        "Certification names must be unique"
+    );
 }
 
 #[test]
@@ -125,7 +155,8 @@ fn test_certifications_ids_are_lowercase_alpha() {
         assert!(
             cert.id.chars().all(|c| c.is_ascii_lowercase()),
             "id '{}' for '{}' must be lowercase alpha only",
-            cert.id, cert.name,
+            cert.id,
+            cert.name,
         );
     }
 }
@@ -136,7 +167,8 @@ fn test_certifications_brand_colors_are_valid_hex() {
         assert!(
             cert.brand_color.starts_with('#') && cert.brand_color.len() == 7,
             "brand_color '{}' for '{}' must be a 7-char hex color (#RRGGBB)",
-            cert.brand_color, cert.name,
+            cert.brand_color,
+            cert.name,
         );
     }
 }
@@ -145,14 +177,21 @@ fn test_certifications_brand_colors_are_valid_hex() {
 fn test_certifications_expected_names_present() {
     let names: Vec<String> = certifications().iter().map(|c| c.name.clone()).collect();
     for expected in &["BAP 4-Star", "BRC AA", "ASC", "HACCP", "EU Approved"] {
-        assert!(names.iter().any(|n| n == expected), "Missing certification: {}", expected);
+        assert!(
+            names.iter().any(|n| n == expected),
+            "Missing certification: {expected}"
+        );
     }
 }
 
 #[test]
 fn test_certifications_all_have_label_short() {
     for cert in certifications() {
-        assert!(!cert.label_short.is_empty(), "Certification '{}' has empty label_short", cert.name);
+        assert!(
+            !cert.label_short.is_empty(),
+            "Certification '{}' has empty label_short",
+            cert.name
+        );
     }
 }
 
@@ -176,15 +215,21 @@ fn test_cert_layout_valid_direction() {
 #[test]
 fn test_cert_layout_stamp_size_reasonable() {
     let layout = cert_layout();
-    assert!(layout.stamp_size >= 16 && layout.stamp_size <= 128,
-        "stamp_size {} is out of reasonable range 16..128", layout.stamp_size);
+    assert!(
+        layout.stamp_size >= 16 && layout.stamp_size <= 128,
+        "stamp_size {} is out of reasonable range 16..128",
+        layout.stamp_size
+    );
 }
 
 #[test]
 fn test_cert_layout_gap_reasonable() {
     let layout = cert_layout();
-    assert!(layout.gap >= 4 && layout.gap <= 64,
-        "gap {} is out of reasonable range 4..64", layout.gap);
+    assert!(
+        layout.gap >= 4 && layout.gap <= 64,
+        "gap {} is out of reasonable range 4..64",
+        layout.gap
+    );
 }
 
 #[test]
@@ -209,23 +254,39 @@ fn test_faqs_returns_four() {
 #[test]
 fn test_inquiry_products_matches_all_products() {
     let product_ids: HashSet<String> = all_products().iter().map(|p| p.id.clone()).collect();
-    let inquiry_ids: HashSet<String> = inquiry_products().iter().map(|(id, _)| id.clone()).collect();
-    assert_eq!(product_ids, inquiry_ids, "Inquiry product IDs must match catalog product IDs");
+    let inquiry_ids: HashSet<String> = inquiry_products()
+        .iter()
+        .map(|(id, _)| id.clone())
+        .collect();
+    assert_eq!(
+        product_ids, inquiry_ids,
+        "Inquiry product IDs must match catalog product IDs"
+    );
 }
 
 #[test]
 fn test_product_categories_cover_all() {
     let products = all_products();
-    let categories: HashSet<String> = products.iter().map(|p| p.category.as_str().to_string()).collect();
+    let categories: HashSet<String> = products
+        .iter()
+        .map(|p| p.category.as_str().to_string())
+        .collect();
     for expected in &["Shrimp", "Cephalopods", "Fish", "Dried"] {
-        assert!(categories.contains(*expected), "Missing category: {}", expected);
+        assert!(
+            categories.contains(*expected),
+            "Missing category: {expected}"
+        );
     }
 }
 
 #[test]
 fn test_all_products_have_short_desc() {
     for p in all_products() {
-        assert!(!p.short_desc.is_empty(), "Product '{}' has no short_desc", p.name);
+        assert!(
+            !p.short_desc.is_empty(),
+            "Product '{}' has no short_desc",
+            p.name
+        );
     }
 }
 

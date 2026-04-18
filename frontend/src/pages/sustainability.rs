@@ -1,6 +1,9 @@
 #![allow(non_snake_case)]
+use crate::{
+    seo::{sustainability_seo, PageSeo},
+    Route,
+};
 use dioxus::prelude::*;
-use crate::{Route, seo::{PageSeo, sustainability_seo}};
 
 #[component]
 pub fn SustainabilityPage() -> Element {

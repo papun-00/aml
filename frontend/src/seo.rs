@@ -38,41 +38,51 @@ pub struct BreadcrumbItem {
 
 impl BreadcrumbItem {
     pub fn new(name: impl Into<String>, url: impl Into<String>) -> Self {
-        Self { name: name.into(), url: url.into() }
+        Self {
+            name: name.into(),
+            url: url.into(),
+        }
     }
 }
 
 const BASE_URL: &str = "https://alashoremarine.com";
 const DEFAULT_OG: &str = "https://alashoremarine.com/assets/og-card.jpg";
-const ORG_NAME: &str  = "Alashore Marine Exports";
+const ORG_NAME: &str = "Alashore Marine Exports";
 
 /// Full SEO head injection — call at top of every page component
 #[component]
 pub fn PageSeo(props: SeoProps) -> Element {
-    let full_title = format!("{} | {} – Premium Seafood Exporter India", props.title, ORG_NAME);
-    let canonical = props.canonical
+    let full_title = format!(
+        "{} | {} – Premium Seafood Exporter India",
+        props.title, ORG_NAME
+    );
+    let canonical = props
+        .canonical
         .clone()
         .unwrap_or_else(|| BASE_URL.to_string());
-    let og_image = props.og_image
+    let og_image = props
+        .og_image
         .clone()
         .unwrap_or_else(|| DEFAULT_OG.to_string());
 
     // Build breadcrumb JSON-LD
-    let breadcrumb_json = if !props.breadcrumbs.is_empty() {
-        let items = props.breadcrumbs
+    let _breadcrumb_json = if !props.breadcrumbs.is_empty() {
+        let items = props
+            .breadcrumbs
             .iter()
             .enumerate()
             .map(|(i, b)| {
                 format!(
                     r#"{{"@type":"ListItem","position":{},"name":"{}","item":"{}"}}"#,
-                    i + 1, b.name, b.url
+                    i + 1,
+                    b.name,
+                    b.url
                 )
             })
             .collect::<Vec<_>>()
             .join(",");
         Some(format!(
-            r#"{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{}]}}"#,
-            items
+            r#"{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{items}]}}"#
         ))
     } else {
         None
@@ -315,7 +325,8 @@ fn about_schema() -> String {
     "foundingDate": "2012-12-01",
     "founders": [{"@type":"Person","name":"Gyan Ranjan Dash","jobTitle":"Managing Director"}]
   }
-}"#.to_string()
+}"#
+    .to_string()
 }
 
 fn contact_schema() -> String {
@@ -343,11 +354,13 @@ fn contact_schema() -> String {
       }
     ]
   }
-}"#.to_string()
+}"#
+    .to_string()
 }
 
 fn product_schema(id: &str, name: &str, description: &str) -> String {
-    format!(r#"{{
+    format!(
+        r#"{{
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": "https://alashoremarine.com/products/{id}",
@@ -363,5 +376,6 @@ fn product_schema(id: &str, name: &str, description: &str) -> String {
     "priceCurrency": "USD",
     "seller": {{"@id": "https://alashoremarine.com/#organization"}}
   }}
-}}"#)
+}}"#
+    )
 }
