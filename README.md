@@ -19,6 +19,8 @@ pnpm install        # Tailwind, concurrently
 pnpm dev            # Starts frontend + backend + Tailwind watcher
 ```
 
+**Troubleshooting?** See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common issues and solutions.
+
 ## Architecture Overview
 
 ```

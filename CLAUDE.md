@@ -249,6 +249,7 @@ Implemented in `backend/src/middleware/`:
 
 ## Common Pitfalls
 
+- **Dioxus `base_path` configuration (CRITICAL)**: The `base_path` setting in `frontend/Dioxus.toml` under `[web.app]` changes where the app is served. If set to `base_path = "some-path"`, the app will only load at `http://localhost:8045/some-path/` and will return 404 at the root `/`. **For development, NEVER set `base_path`** - omit it entirely so the app serves from root. Only use `base_path` for production GitHub Pages deployment where a subdirectory is required. If the UI returns 404 during development, check `Dioxus.toml` first and remove any `base_path` line.
 - **CSS source of truth is `frontend/input.css`**, NOT `frontend/assets/css/main.css`. The `main.css` file is **generated** by Tailwind and will be overwritten. Always edit `input.css` and run `pnpm build:tailwind` to regenerate.
 - **External SVGs with background rects**: Many SVGs include `<rect width="100%" fill="#FFF"/>` which will cover parent content. Always check SVG files for background rects before using them as overlays. Prefer inline SVGs in RSX for separators/decorations.
 - **`id` in RSX for-loops**: Dioxus reserves `key` for list reconciliation. Use `key: "{item.id}"` on the outermost element in `for` loops. Do NOT use `id` as a variable name that shadows Dioxus internals.

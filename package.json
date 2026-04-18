@@ -16,5 +16,9 @@
     "test:integration": "cargo test --workspace --test '*'",
     "verify": "pnpm run check && pnpm run lint && pnpm run test",
     "build": "pnpm run build:tailwind && cd frontend && dx build --release"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.2.2",
+    "@tailwindcss/cli": "^4.2.2"
   }
 }

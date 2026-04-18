@@ -5,7 +5,6 @@ out_dir = "dist"
 
 [web.app]
 title = "Alashore Marine Exports | Premium Seafood Exporter, India"
-base_path = "alashore-marine-pvt-ltd"
 
 [web.watcher]
 reload_html = true
