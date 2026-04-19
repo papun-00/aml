@@ -22,10 +22,12 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
-  # Pin Rust version for reproducible builds
-  RUST_VERSION: "1.84.0"
+  # Use stable Rust (latest)
+  RUST_VERSION: "stable"
   # Pin Dioxus CLI version
   DIOXUS_CLI_VERSION: "0.7.4"
+  # Pin cargo-audit version compatible with Rust 1.84+
+  CARGO_AUDIT_VERSION: "0.21.2"
 
 jobs:
   # ═══════════════════════════════════════════════════════════════════════
@@ -61,7 +63,7 @@ jobs:
           restore-keys: ${{ runner.os }}-cargo-audit-
 
       - name: Install cargo-audit
-        run: cargo install cargo-audit --locked --version 0.22.1
+        run: cargo install cargo-audit --locked --version ${{ env.CARGO_AUDIT_VERSION }}
 
       - name: Run security audit (ignore warnings for now)
         run: cargo audit --deny vulnerability
