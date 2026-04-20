@@ -192,27 +192,36 @@ jobs:
       - name: Build frontend (Release mode with optimizations)
         run: |
           cd frontend
-          dx build --release
+          dx bundle --platform web --release
           echo "✅ Frontend built successfully"
+          echo "📂 Output structure:"
+          ls -la dist/public/
+
+      - name: Rewrite asset paths for GitHub Pages base_path
+        run: |
+          # Dioxus prefixes bundled asset URLs with base_path, but the HTML
+          # template uses absolute /assets/... — rewrite those to /aml/assets/
+          sed -i 's|href="/assets/|href="/aml/assets/|g; s|src="/assets/|src="/aml/assets/|g' frontend/dist/public/index.html
+          echo "✅ Asset paths rewritten for /aml/ base_path"
 
       - name: Add .nojekyll for GitHub Pages
-        run: touch frontend/dist/.nojekyll
+        run: touch frontend/dist/public/.nojekyll
 
       - name: Create 404.html for SPA routing
-        run: cp frontend/dist/index.html frontend/dist/404.html
+        run: cp frontend/dist/public/index.html frontend/dist/public/404.html
 
       - name: Add robots.txt
         run: |
-          cat > frontend/dist/robots.txt << 'EOF'
+          cat > frontend/dist/public/robots.txt << 'EOF'
           User-agent: *
           Allow: /
-          Sitemap: https://cyfen-code.github.io/alashore-marine-pvt-ltd/sitemap.xml
+          Sitemap: https://ionix-ray.github.io/aml/sitemap.xml
           EOF
           echo "✅ robots.txt created"
 
       - name: Add custom security headers file
         run: |
-          cat > frontend/dist/_headers << 'EOF'
+          cat > frontend/dist/public/_headers << 'EOF'
           /*
             X-Frame-Options: DENY
             X-Content-Type-Options: nosniff
@@ -230,25 +239,25 @@ jobs:
       - name: Verify build artifacts and security
         run: |
           echo "📦 Build artifact contents:"
-          ls -lah frontend/dist/
+          ls -lah frontend/dist/public/
           echo ""
           echo "📄 Checking critical files:"
-          test -f frontend/dist/index.html && echo "✅ index.html exists" || exit 1
-          test -f frontend/dist/404.html && echo "✅ 404.html exists" || exit 1
-          test -f frontend/dist/.nojekyll && echo "✅ .nojekyll exists" || exit 1
-          test -f frontend/dist/_headers && echo "✅ _headers exists" || exit 1
-          test -f frontend/dist/robots.txt && echo "✅ robots.txt exists" || exit 1
+          test -f frontend/dist/public/index.html && echo "✅ index.html exists" || exit 1
+          test -f frontend/dist/public/404.html && echo "✅ 404.html exists" || exit 1
+          test -f frontend/dist/public/.nojekyll && echo "✅ .nojekyll exists" || exit 1
+          test -f frontend/dist/public/_headers && echo "✅ _headers exists" || exit 1
+          test -f frontend/dist/public/robots.txt && echo "✅ robots.txt exists" || exit 1
           echo ""
           echo "🔒 Security headers preview:"
-          head -n 15 frontend/dist/_headers
+          head -n 15 frontend/dist/public/_headers
           echo ""
           echo "🔍 Checking for sensitive files (should not exist):"
           ! test -f frontend/dist/.env && echo "✅ No .env file" || exit 1
-          ! find frontend/dist -name "*.rs" -o -name "Cargo.toml" -o -name "Cargo.lock" | grep -q . && echo "✅ No source files leaked" || exit 1
+          ! find frontend/dist/public -name "*.rs" -o -name "Cargo.toml" -o -name "Cargo.lock" | grep -q . && echo "✅ No source files leaked" || exit 1
 
       - name: Generate build metadata
         run: |
-          cat > frontend/dist/build-info.json << EOF
+          cat > frontend/dist/public/build-info.json << EOF
           {
             "version": "1.0.0",
             "commit": "${{ github.sha }}",
@@ -264,7 +273,7 @@ jobs:
         uses: actions/upload-artifact@v4 # v4.6.0
         with:
           name: production-build
-          path: frontend/dist
+          path: frontend/dist/public
           retention-days: 7
           if-no-files-found: error
 
