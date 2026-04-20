@@ -5,7 +5,7 @@ out_dir = "dist"
 
 [web.app]
 title = "Alashore Marine Exports | Premium Seafood Exporter, India"
-base_path = "alashore-marine-pvt-ltd"  # GitHub Pages repository path
+base_path = "aml"  # GitHub Pages repository path (ionix-ray/aml → /aml/)
 
 [web.watcher]
 reload_html = true
