@@ -10,7 +10,7 @@ certs = ["BAP 4-Star", "ASC", "BRC AA", "HACCP", "EU Approved"]
 markets = ["USA", "EU", "Japan", "South Korea", "Australia"]
 min_order = "20,000 kg"
 short_desc = "BAP 4-Star certified aquaculture shrimp from Odisha. Sizes U/10 to 50/60. HOSO, HLSO, PTO, PD, Butterfly, EZ-Peel, IQF formats."
-image_url = "/assets/images/vannamei-shrimp.webp"
+image_url = "/assets/images/vannamei-shrimp.svg"
 css_class = "vannamei"
 ---
 

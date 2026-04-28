@@ -1,4 +1,5 @@
 #![allow(non_snake_case)]
+use crate::utils::asset_url;
 use crate::Route;
 use dioxus::prelude::*;
 
@@ -36,7 +37,7 @@ pub fn ProductCard(props: ProductCardProps) -> Element {
                 class: "product-card-visual {props.css_class}",
                 if let Some(ref url) = props.image_url {
                     img {
-                        src: "{url}",
+                        src: "{asset_url(url)}",
                         alt: "{props.name}",
                         class: "product-card-img",
                         loading: "lazy",

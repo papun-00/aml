@@ -10,7 +10,7 @@ certs = ["FSSAI", "MPEDA", "HACCP"]
 markets = ["Southeast Asia", "Middle East", "Africa", "USA"]
 min_order = "2,000 kg"
 short_desc = "Traditional sun-dried shrimp with no preservatives. Low moisture. Whole, crushed, or powder. 12-month shelf life."
-image_url = "/assets/images/dried-shrimp.webp"
+image_url = "/assets/images/dried-shrimp.svg"
 css_class = "dried-shrimp"
 ---
 

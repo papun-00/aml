@@ -190,6 +190,10 @@ jobs:
           echo "✅ Production config applied"
 
       - name: Build frontend (Release mode with optimizations)
+        env:
+          # Compile-time base path baked into WASM via option_env!("BASE_PATH").
+          # Runtime-rendered <img src="/assets/..."> URLs get prefixed with this.
+          BASE_PATH: /aml
         run: |
           cd frontend
           dx bundle --platform web --release

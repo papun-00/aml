@@ -10,7 +10,7 @@ certs = ["MPEDA", "HACCP", "EU Approved", "FSSAI"]
 markets = ["Japan", "USA", "UAE", "EU", "South Korea"]
 min_order = "5,000 kg"
 short_desc = "Wild-caught and farm-raised giant tiger prawns from Bay of Bengal. Sizes U/8 to 16/20. Sashimi grade available."
-image_url = "/assets/images/black-tiger-shrimp.webp"
+image_url = "/assets/images/black-tiger-shrimp.svg"
 css_class = "black-tiger"
 ---
 

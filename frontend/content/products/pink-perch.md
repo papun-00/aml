@@ -10,7 +10,7 @@ certs = ["MPEDA", "HACCP", "EU Approved", "FSSAI"]
 markets = ["China", "Southeast Asia", "Middle East", "EU"]
 min_order = "10,000 kg"
 short_desc = "Mild white-fleshed Bay of Bengal fish. Whole round, HG, fillet skin-on or skinless. Surimi-grade available."
-image_url = "/assets/images/pink-perch.webp"
+image_url = "/assets/images/pink-perch.svg"
 css_class = "pink-perch"
 ---
 

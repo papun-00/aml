@@ -9,6 +9,7 @@ use crate::{
     },
     config::{all_products, company_stats, faqs},
     seo::{home_seo, PageSeo},
+    utils::asset_url,
     Route,
 };
 use dioxus::prelude::*;
@@ -260,7 +261,7 @@ pub fn HomePage() -> Element {
             // Dot-matrix world map with trade routes — external SVG
             img {
                 class: "markets-globe-bg",
-                src: "/assets/images/world-map-dots.svg",
+                src: "{asset_url(\"/assets/images/world-map-dots.svg\")}",
                 alt: "",
                 "aria-hidden": "true",
                 loading: "lazy",

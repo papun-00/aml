@@ -10,7 +10,7 @@ certs = ["MPEDA", "HACCP", "EU Approved"]
 markets = ["Spain", "Portugal", "Japan", "South Korea", "Italy"]
 min_order = "5,000 kg"
 short_desc = "Pharaoh cuttlefish from Bay of Bengal. Whole cleaned or tubes & tentacles. Ink sac intact on request."
-image_url = "/assets/images/cuttlefish.webp"
+image_url = "/assets/images/cuttlefish.svg"
 css_class = "cuttlefish"
 ---
 

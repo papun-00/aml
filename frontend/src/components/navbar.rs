@@ -1,11 +1,13 @@
 #![allow(non_snake_case)]
 use super::theme_toggle::ThemeToggle;
+use crate::utils::asset_url;
 use crate::Route;
 use dioxus::prelude::*;
 
 #[component]
 pub fn Navbar() -> Element {
     let mut menu_open = use_signal(|| false);
+    let logo_src = asset_url("/assets/alashore-logo.png");
 
     rsx! {
         header {
@@ -26,7 +28,7 @@ pub fn Navbar() -> Element {
                     "aria-label": "Alashore Marine Exports – Home",
                     itemprop: "url",
                     img {
-                        src: "/assets/alashore-logo.png",
+                        src: "{logo_src}",
                         alt: "Alashore Marine Export Pvt. Ltd. Logo",
                         style: "height:2.25rem;width:auto;object-fit:contain;",
                     }
