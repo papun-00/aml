@@ -1,0 +1,24 @@
+Repository-level rules for the Windsurf agent.
+
+Same content as .cursorrules / CLAUDE.md / AGENTS.md / GEMINI.md / .github/copilot-instructions.md — kept in sync for cross-harness portability.
+
+On every prompt:
+- Read STATE.md and the current BACKLOG.md item before suggesting code.
+- Follow the master skill stack at /Volumes/hex/current-work/skills/ — see .claude/SKILLS_REFERENCE.md.
+- Read the matching skill before non-trivial work.
+
+Hard rules:
+- Author = cyfen-code <code@cyfen.co>.
+- License = BSD-3-Clause.
+- TDD: failing test first.
+- Smoke gate before feature work.
+- Threat-model gate for trust-boundary changes.
+- No secrets in source / logs / errors.
+- Local-first AI default.
+- Compile-time security where possible.
+- Defense in depth — ≥2 independent controls per high-impact threat.
+- Refactors must preserve current product behaviour; additive where possible.
+
+Compaction:
+- Before compaction: dump task / questions / next 3 steps to STATE.md.
+- After resume: re-read STATE.md + BACKLOG + last 3 PROGRESS entries before action.

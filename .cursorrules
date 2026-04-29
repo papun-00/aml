@@ -1,0 +1,24 @@
+Repository-level rules for the Cursor IDE agent.
+
+On every prompt:
+- Read STATE.md and the current BACKLOG.md item before suggesting code.
+- Follow the master skill stack at /Volumes/hex/current-work/skills/ — see .claude/SKILLS_REFERENCE.md.
+- Read the matching skill (testing-strategy / tdd-discipline / threat-modeling / etc.) before non-trivial work.
+
+Hard rules:
+- Author = cyfen-code <code@cyfen.co>.
+- License = BSD-3-Clause.
+- TDD: write the failing test first; red → green → refactor.
+- Smoke gate before any feature work (scripts/smoke.sh).
+- Threat-model gate for any change touching auth / PII / crypto / AI / trust boundaries.
+- No secrets in source / logs / errors.
+- Local-first AI default; cloud only on explicit opt-in.
+- Compile-time security where the language permits.
+- Defense in depth — ≥2 independent controls per high-impact threat.
+- Refactors must preserve current product behaviour; additive where possible; small reversible PRs.
+
+Compaction discipline:
+- Before context compaction: dump current task / unresolved questions / next 3 steps to STATE.md.
+- After resume: re-read STATE.md + BACKLOG current item + last 3 PROGRESS entries before any action.
+
+This file is the same content as CLAUDE.md / AGENTS.md / GEMINI.md / .windsurfrules / .github/copilot-instructions.md — kept in sync for cross-harness portability.
