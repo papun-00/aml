@@ -2435,15 +2435,6 @@
     z-index: 1;
   }
 
-  /* Gentle bob on product card images */
-  .product-card-img {
-    animation: gentle-bob 6s ease-in-out infinite;
-  }
-  .product-card:hover .product-card-img {
-    animation: none;
-    transform: scale(1.05);
-  }
-
   /* Shimmer effect on stat values */
   .stat-value {
     background: linear-gradient(90deg, var(--color-carbon-gray-100) 40%, var(--color-teal-400) 50%, var(--color-carbon-gray-100) 60%);

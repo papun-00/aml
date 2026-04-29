@@ -10,7 +10,7 @@ certs = ["MPEDA", "HACCP", "EU Approved"]
 markets = ["Spain", "Italy", "South Korea", "Japan", "UAE", "Southeast Asia"]
 min_order = "10,000 kg"
 short_desc = "Wild-caught Bay of Bengal squid. Whole, tubes & tentacles, rings (6mm/10mm), steaks. Frozen within 2 hours."
-image_url = "/assets/images/squid.svg"
+image_url = "/assets/images/indian-squid.png"
 css_class = "squid"
 ---
 
